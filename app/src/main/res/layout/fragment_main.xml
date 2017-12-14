@@ -53,4 +53,12 @@
         app:layout_constraintEnd_toEndOf="@+id/editText3"
         app:layout_constraintStart_toStartOf="@+id/editText3"
         app:layout_constraintTop_toBottomOf="@+id/editText3" />
+
+    <ListView
+        android:id="@+id/sessionToken"
+        android:layout_width="368dp"
+        android:layout_height="193dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="254dp" />
+
 </android.support.constraint.ConstraintLayout>
