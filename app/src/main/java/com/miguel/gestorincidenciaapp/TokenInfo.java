@@ -1,10 +1,7 @@
 package com.miguel.gestorincidenciaapp;
 
-/**
- * Created by miguel on 14/12/2017.
- */
 
-public class Glpi {
+public class TokenInfo {
 
     private String sessionToken;
 
