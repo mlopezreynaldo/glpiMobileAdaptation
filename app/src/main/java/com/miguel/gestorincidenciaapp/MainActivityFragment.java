@@ -29,7 +29,6 @@ public class MainActivityFragment extends Fragment {
     private Retrofit retrofit;
     private GlpiClient glpi;
     private  TokenInfo data;
-    private String sessionToken;
 
     public MainActivityFragment() {
     }
@@ -66,8 +65,9 @@ public class MainActivityFragment extends Fragment {
                            data = response.body();
                            Log.d("InitSessionResponse", response.toString());
 
-                           sessionToken = response.body().getSessionToken();
                            Log.d("InitSessionResponse", response.body().toString());
+
+                            getFullSession(call, response.body().getSessionToken());
 
 
                         } else {
@@ -88,53 +88,65 @@ public class MainActivityFragment extends Fragment {
                     @Override
                     public void onFailure(Call<TokenInfo> call, Throwable t) {}
                 });
+            }
 
-                call = glpi.getFullSession( sessionToken , apptoken);
-                call.enqueue(new Callback<TokenInfo>() {
-                    @Override
-                    public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
-
-                        Log.d("URL", call.request().url().toString());
-
-                        if(response.isSuccessful()){
-
-                            data = response.body();
-                            Log.d("DATA", "DATA" + " Funciona el full session");
-
-                            Toast.makeText(getContext(),"DATA" + sessionToken, Toast.LENGTH_LONG).show();
-
-                        } else {
-
-                            ResponseBody body = response.errorBody();
-                            Log.d("ERROR", body.toString());
-
-                            try {
-
-                                Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
+        });
 
 
-                    }
+        Button addIssue = view.findViewById(R.id.addIssue);
+        addIssue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-                    @Override
-                    public void onFailure(Call<TokenInfo> call, Throwable t) {
 
-                        Context context = getContext();
-                        Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
-
-                    }
-                });
 
             }
         });
 
-
-
         return view;
 
+    }
+
+    private void getFullSession(Call<TokenInfo> call, final String sessionToken1) {
+        call = null;
+        call = glpi.getFullSession( sessionToken1 , apptoken);
+        call.enqueue(new Callback<TokenInfo>() {
+            @Override
+            public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
+
+                Log.d("URL", call.request().url().toString());
+
+                if(response.isSuccessful()){
+
+                    data = response.body();
+                    Log.d("DATA", "DATA" + " Funciona el full session");
+
+                    Toast.makeText(getContext(),"DATA" + sessionToken1, Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    ResponseBody body = response.errorBody();
+                    Log.d("ERROR", body.toString());
+
+                    try {
+
+                        Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<TokenInfo> call, Throwable t) {
+
+                Context context = getContext();
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
 }

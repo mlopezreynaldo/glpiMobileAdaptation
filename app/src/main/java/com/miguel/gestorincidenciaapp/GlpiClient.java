@@ -1,7 +1,13 @@
 package com.miguel.gestorincidenciaapp;
 
+import java.util.Date;
+
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 //https://weex.apache.org/
 /**
@@ -22,5 +28,37 @@ public interface GlpiClient {
             @Query("session_token") String sessionToken,
             @Query("app_token") String appToken
     );
+
+    @POST("Ticket")
+    @FormUrlEncoded
+    Call<TicketJsonBuilder> setNewIssue(
+            @Field("name") String name,
+            @Field("date") Date date,
+            @Field("status") int status,
+            @Field("content") String content,
+            @Field("urgency") int uergency,
+            @Field("priority") int priority,
+            @Field("type") int type
+    );
+
+
+    /*Ejemplo enviar Ticket: http://5.145.175.176/glpi/apirest.php/Ticket/?app_token=5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj&session_token=ols8ve7k2rki62dsqasren6ph5
+    {"input": {
+        "name": "pene",
+        "date": "2017-12-20 22:07:23",
+        "users_id_lastupdater": 2,
+        "status": 2,
+        "users_id_recipient": 2,
+        "requesttypes_id": 1,
+        "content": "dadada",
+        "urgency": 3,
+        "impact": 3,
+        "priority": 3,
+        "itilcategories_id": 0,
+        "type": 1,
+        "solutiontypes_id": 0,
+        "solution": null
+   }
+}*/
 
 }
