@@ -16,7 +16,11 @@ public interface GlpiClient {
             @Query("password") String password,
             @Query("app_token") String appToken
     );
-//    @GET("initSession/?app_token=5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj&login={login}&password={password}")
-//    Call<TokenInfo> initSession(@Path("login") String login, @Path("password") String password);
+
+    @GET("getFullSession")
+    Call<TokenInfo> getFullSession (
+            @Query("session_token") String sessionToken,
+            @Query("app_token") String appToken
+    );
 
 }

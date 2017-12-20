@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,6 +25,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MainActivityFragment extends Fragment {
 
+    private String apptoken = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
+    private Retrofit retrofit;
+    private GlpiClient glpi;
+    private  TokenInfo data;
+    private String sessionToken;
+
     public MainActivityFragment() {
     }
 
@@ -40,41 +47,94 @@ public class MainActivityFragment extends Fragment {
                 .baseUrl("http://5.145.175.176/glpi/apirest.php/")
                 .addConverterFactory(GsonConverterFactory.create());
 
-        Retrofit retrofit = builder.build();
+        retrofit = builder.build();
 
-        GlpiClient glpi = retrofit.create(GlpiClient.class);
-        Call<TokenInfo> call = glpi.initSession("glpi", "D1A2I3", "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj");
-
-        call.enqueue(new Callback<TokenInfo>() {
+        Button login = view.findViewById(R.id.login);
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
-                Log.d("URL", call.request().url().toString()); // here
-                if(response.isSuccessful()){
-                    TokenInfo data = response.body();
-                    Log.d("DATA", "DATA" + data.toString());
+            public void onClick(View view) {
 
-                    Toast.makeText(getContext(),"DATA" + data.toString(), Toast.LENGTH_LONG).show();
-                } else {
-                    ResponseBody body = response.errorBody();
-                    Log.d("ERROR", body.toString());
+                glpi = retrofit.create(GlpiClient.class);
+                Call<TokenInfo> call = glpi.initSession("glpi", "D1A2I3", apptoken);
+                call.enqueue(new Callback<TokenInfo>() {
 
-                    try {
-                        Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    @Override
+                    public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
+
+                        if(response.isSuccessful()){
+
+                           data = response.body();
+                           Log.d("InitSessionResponse", response.toString());
+
+                           sessionToken = response.body().getSessionToken();
+                           Log.d("InitSessionResponse", response.body().toString());
+
+
+                        } else {
+
+                            ResponseBody body = response.errorBody();
+                            Log.d("ERROR", body.toString());
+
+                            try {
+
+                                Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<TokenInfo> call, Throwable t) {
+                    @Override
+                    public void onFailure(Call<TokenInfo> call, Throwable t) {}
+                });
 
-                Context context = getContext();
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
+                call = glpi.getFullSession( sessionToken , apptoken);
+                call.enqueue(new Callback<TokenInfo>() {
+                    @Override
+                    public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
+
+                        Log.d("URL", call.request().url().toString());
+
+                        if(response.isSuccessful()){
+
+                            data = response.body();
+                            Log.d("DATA", "DATA" + " Funciona el full session");
+
+                            Toast.makeText(getContext(),"DATA" + sessionToken, Toast.LENGTH_LONG).show();
+
+                        } else {
+
+                            ResponseBody body = response.errorBody();
+                            Log.d("ERROR", body.toString());
+
+                            try {
+
+                                Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<TokenInfo> call, Throwable t) {
+
+                        Context context = getContext();
+                        Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
+
+                    }
+                });
 
             }
         });
+
+
+
         return view;
 
     }
-}2
+}
