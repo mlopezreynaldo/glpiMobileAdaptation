@@ -12,7 +12,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -29,7 +32,8 @@ public class MainActivityFragment extends Fragment {
     private String apptoken = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
     private Retrofit retrofit;
     private GlpiClient glpi;
-    private  TokenInfo data;
+    private TokenInfo data;
+    private String sessionToken;
 
     public MainActivityFragment() {
     }
@@ -99,10 +103,38 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                TicketJsonBuilder jsonBuilder = new TicketJsonBuilder();
-                jsonBuilder.jsonNewTicket();
                 Date d = new Date();
-                glpi.setNewIssue("pene",d,2,"adada",3,3,1);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String date = sdf.format(d);
+
+                TicketJsonBuilder t = new TicketJsonBuilder("hola",date,2,"dada",1,1,2);
+                Log.d("DEBUG", t.toString());
+
+                Map<String, TicketJsonBuilder> map = new HashMap<>();
+                map.put("input", t);
+
+                Call<TicketJsonBuilder> call = glpi.setNewIssue(apptoken,sessionToken, map);
+
+                call.enqueue(new Callback<TicketJsonBuilder>() {
+                    @Override
+                    public void onResponse(Call<TicketJsonBuilder> call, Response<TicketJsonBuilder> response) {
+
+                        if(response.isSuccessful()){
+
+                            Toast.makeText(getContext(),"DATA" + response.headers(), Toast.LENGTH_LONG).show();
+                            Log.d("RESPUESTA",response.body().toString());
+
+                        } else {
+
+                            Toast.makeText(getContext(),"DATA" + response.isSuccessful(), Toast.LENGTH_LONG).show();
+                            Log.d("RESPUESTA",response.toString() + "   " + response.headers());
+
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<TicketJsonBuilder> call, Throwable t) {
+                    }
+                });
             }
         });
 
@@ -140,6 +172,7 @@ public class MainActivityFragment extends Fragment {
                     }
                 }
 
+                sessionToken = sessionToken1;
 
             }
 
