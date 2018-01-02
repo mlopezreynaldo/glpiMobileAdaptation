@@ -39,7 +39,8 @@ public interface GlpiClient {
     Call<TicketJsonBuilder> setNewIssue(
 
             @Query("app_token") String app_token,
-            @Body TicketJsonBuilder ticketJsonBuilder
+            @Query("session_token") String session_token,
+            @Body TicketJsonBuilder input
     );
 
 

@@ -11,7 +11,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import okhttp3.ResponseBody;
@@ -29,7 +32,8 @@ public class MainActivityFragment extends Fragment {
     private String apptoken = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
     private Retrofit retrofit;
     private GlpiClient glpi;
-    private  TokenInfo data;
+    private TokenInfo data;
+    private String sessionToken;
 
     public MainActivityFragment() {
     }
@@ -100,8 +104,32 @@ public class MainActivityFragment extends Fragment {
             public void onClick(View view) {
 
                 Date d = new Date();
-                TicketJsonBuilder t = new TicketJsonBuilder("hola",d,2,"dada",1,1,2);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String date = sdf.format(d);
 
+                TicketJsonBuilder t = new TicketJsonBuilder("hola",date,2,"dada",1,1,2);
+                Log.d("DEBUG", t.toString());
+
+                Call<TicketJsonBuilder> call = glpi.setNewIssue(apptoken,sessionToken, t);
+
+                call.enqueue(new Callback<TicketJsonBuilder>() {
+                    @Override
+                    public void onResponse(Call<TicketJsonBuilder> call, Response<TicketJsonBuilder> response) {
+
+                        if(response.isSuccessful()){
+
+                            Log.d("RESPUESTA",response.body().toString());
+
+                        } else {
+
+                            Log.d("RESPUESTA",response.toString() + "   " + response.headers());
+
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<TicketJsonBuilder> call, Throwable t) {
+                    }
+                });
             }
         });
 
@@ -139,6 +167,7 @@ public class MainActivityFragment extends Fragment {
                     }
                 }
 
+                sessionToken = sessionToken1;
 
             }
 

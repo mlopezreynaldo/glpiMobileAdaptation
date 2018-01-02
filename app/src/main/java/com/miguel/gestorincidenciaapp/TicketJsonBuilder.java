@@ -12,7 +12,7 @@ public class TicketJsonBuilder {
     private String name;
     @SerializedName("date")
     @Expose
-    private Date date;
+    private String date;
     @SerializedName("status")
     @Expose
     private int status;
@@ -29,7 +29,7 @@ public class TicketJsonBuilder {
     @Expose
     private int type;
 
-    public TicketJsonBuilder(String name, Date date, int status, String content, int urgency, int priority, int type) {
+    public TicketJsonBuilder(String name, String date, int status, String content, int urgency, int priority, int type) {
         this.name = name;
         this.date = date;
         this.status = status;
@@ -47,11 +47,11 @@ public class TicketJsonBuilder {
         this.name = name;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -94,4 +94,18 @@ public class TicketJsonBuilder {
     public void setType(int type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "TicketJsonBuilder{" +
+                "name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", status=" + status +
+                ", content='" + content + '\'' +
+                ", urgency=" + urgency +
+                ", priority=" + priority +
+                ", type=" + type +
+                '}';
+    }
 }
+
