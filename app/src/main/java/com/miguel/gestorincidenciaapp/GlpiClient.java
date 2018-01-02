@@ -1,6 +1,8 @@
 package com.miguel.gestorincidenciaapp;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -29,6 +31,7 @@ public interface GlpiClient {
             @Query("app_token") String appToken
     );
 
+
     @POST("Ticket")
     @FormUrlEncoded
     Call<TicketJsonBuilder> setNewIssue(
@@ -36,7 +39,7 @@ public interface GlpiClient {
             @Field("date") Date date,
             @Field("status") int status,
             @Field("content") String content,
-            @Field("urgency") int uergency,
+            @Field("urgency") int urgency,
             @Field("priority") int priority,
             @Field("type") int type
     );

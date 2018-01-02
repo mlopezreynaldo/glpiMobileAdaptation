@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.Date;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -98,8 +99,10 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-
-
+                TicketJsonBuilder jsonBuilder = new TicketJsonBuilder();
+                jsonBuilder.jsonNewTicket();
+                Date d = new Date();
+                glpi.setNewIssue("pene",d,2,"adada",3,3,1);
             }
         });
 
