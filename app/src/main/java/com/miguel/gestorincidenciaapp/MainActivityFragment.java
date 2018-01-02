@@ -99,10 +99,9 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                TicketJsonBuilder jsonBuilder = new TicketJsonBuilder();
-                jsonBuilder.jsonNewTicket();
                 Date d = new Date();
-                glpi.setNewIssue("pene",d,2,"adada",3,3,1);
+                TicketJsonBuilder t = new TicketJsonBuilder("hola",d,2,"dada",1,1,2);
+
             }
         });
 

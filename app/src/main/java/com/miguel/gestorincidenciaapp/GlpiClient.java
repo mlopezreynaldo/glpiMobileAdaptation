@@ -9,6 +9,8 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 //https://weex.apache.org/
@@ -33,15 +35,11 @@ public interface GlpiClient {
 
 
     @POST("Ticket")
-    @FormUrlEncoded
+    @Headers({"Content-Type: application/json","Cache-Control: max-age=640000"})
     Call<TicketJsonBuilder> setNewIssue(
-            @Field("name") String name,
-            @Field("date") Date date,
-            @Field("status") int status,
-            @Field("content") String content,
-            @Field("urgency") int urgency,
-            @Field("priority") int priority,
-            @Field("type") int type
+
+            @Query("app_token") String app_token,
+            @Body TicketJsonBuilder ticketJsonBuilder
     );
 
 
