@@ -11,11 +11,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -110,7 +110,10 @@ public class MainActivityFragment extends Fragment {
                 TicketJsonBuilder t = new TicketJsonBuilder("hola",date,2,"dada",1,1,2);
                 Log.d("DEBUG", t.toString());
 
-                Call<TicketJsonBuilder> call = glpi.setNewIssue(apptoken,sessionToken, t);
+                Map<String, TicketJsonBuilder> map = new HashMap<>();
+                map.put("input", t);
+
+                Call<TicketJsonBuilder> call = glpi.setNewIssue(apptoken,sessionToken, map);
 
                 call.enqueue(new Callback<TicketJsonBuilder>() {
                     @Override
@@ -118,10 +121,12 @@ public class MainActivityFragment extends Fragment {
 
                         if(response.isSuccessful()){
 
+                            Toast.makeText(getContext(),"DATA" + response.headers(), Toast.LENGTH_LONG).show();
                             Log.d("RESPUESTA",response.body().toString());
 
                         } else {
 
+                            Toast.makeText(getContext(),"DATA" + response.isSuccessful(), Toast.LENGTH_LONG).show();
                             Log.d("RESPUESTA",response.toString() + "   " + response.headers());
 
                         }
