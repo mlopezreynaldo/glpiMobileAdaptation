@@ -34,6 +34,15 @@ public interface GlpiClient {
             @Query("session_token") String session_token,
             @Body Map<String, TicketJsonBuilder> input
     );
-    
+
+    @POST("User")
+    @Headers({"Content-Type: application/json","Cache-Control: max-age=640000"})
+    Call<RegisterUser> registerUser(
+
+            @Query("app_token") String app_token,
+            @Query("session_token") String session_token,
+            @Body Map<String, RegisterUser> input
+    );
+
 
 }
