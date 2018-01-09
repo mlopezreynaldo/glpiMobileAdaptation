@@ -1,6 +1,7 @@
 package com.miguel.gestorincidenciaapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,11 +70,20 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
-        final Button createUser = view.findViewById(R.id.registrer);
+        Button createUser = view.findViewById(R.id.registrer);
         createUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 registerUser();
+            }
+        });
+
+        Button newIntance = view.findViewById(R.id.buttonu);
+        newIntance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getActivity(), Login.class));
             }
         });
 
