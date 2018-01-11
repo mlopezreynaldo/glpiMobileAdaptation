@@ -97,7 +97,7 @@ public class MainActivityFragment extends Fragment {
     private void registerUser() {
 
         Map<String , RegisterUser> registerUserMap = new HashMap<>();
-        final RegisterUser registerUser = new RegisterUser("PAPA","KAKA",13,"SKRAAAH", 666666);
+        final RegisterUser registerUser = new RegisterUser("PAPA","KAKA",13,"SKRAAAH", 666666,"dada","dada");
         registerUserMap.put("input",registerUser);
 
         Call<RegisterUser> call = glpi.registerUser(apptoken,sessionToken,registerUserMap);
