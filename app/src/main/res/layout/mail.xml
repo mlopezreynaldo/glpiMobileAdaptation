@@ -14,7 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Button"
+        android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4" />
@@ -39,7 +39,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:inputType="textEmailAddress"
+        android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/edTxT_passw"
         app:layout_constraintEnd_toEndOf="@+id/edTxT_passw"
         app:layout_constraintStart_toStartOf="@+id/edTxT_passw" />
