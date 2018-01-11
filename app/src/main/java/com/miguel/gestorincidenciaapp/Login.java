@@ -1,5 +1,6 @@
 package com.miguel.gestorincidenciaapp;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -21,21 +22,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Login extends AppCompatActivity {
 
+    private static String usernameGet;
+    private static String passwordGet;
+    private static String phoneGet;
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    private String apptoken = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
-    static private Retrofit retrofit;
-    private GlpiClient glpi;
-    private TokenInfo data;
-    private String sessionToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +62,6 @@ public class Login extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,6 +86,11 @@ public class Login extends AppCompatActivity {
     public static class PlaceholderFragment extends Fragment {
 
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private String apptoken = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
+        private Retrofit retrofit;
+        private GlpiClient glpi;
+        private TokenInfo data;
+        private String sessionToken;
 
         public PlaceholderFragment() {
         }
@@ -116,39 +126,51 @@ public class Login extends AppCompatActivity {
                     final EditText mail = rootView.findViewById(R.id.edTxt_mail);
                     final EditText editPassword = rootView.findViewById(R.id.edTxT_passw);
 
+
                     btnLogin.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
                             if(isEmailValid(mail)){
 
-                                String mailInput = mail.getText().toString();
+                                usernameGet = mail.getText().toString();
 
                             }
 
                             if(isPasswordValid(editPassword)){
 
-                                String password = editPassword.getText().toString();
-                                
+                                passwordGet = editPassword.getText().toString();
+
                             }
+
+
+                            Log.d("DATA TO SEND",usernameGet + "    " + passwordGet );
+
+                            login(usernameGet,passwordGet);
+
+                            usernameGet = "";
+                            passwordGet = "";
+
                         }
                     });
 
                     break;
 
                 case 2:
-                    final EditText edPhone = rootView.findViewById(R.id.edtPhone);
+
                     rootView = inflater.inflate(R.layout.phone, container, false);
+                    final EditText edPhone = rootView.findViewById(R.id.edtPhone);
 
                     Button phonelogin = rootView.findViewById(R.id.btnLoginPhone);
 
                     phonelogin.setOnClickListener(new View.OnClickListener() {
+
                         @Override
                         public void onClick(View view) {
 
                             if(isPhoneValid(edPhone)){
 
-                                String phone = edPhone.getText().toString();
+                                phoneGet = edPhone.getText().toString();
                             }
                         }
                     });
@@ -161,6 +183,8 @@ public class Login extends AppCompatActivity {
         }
 
         private boolean isPhoneValid(EditText auxPhone) {
+
+            Log.d("PHON LOG","Boolean check");
 
             if(!Patterns.PHONE.matcher(auxPhone.getText().toString()).matches()){
 
@@ -184,11 +208,11 @@ public class Login extends AppCompatActivity {
             if(passwordValid.getText().toString().equals("")){
 
                 passwordValid.setError("El camp contrasenya no pot estar vuit");
-                return true;
+                return false;
 
             } else {
 
-                return false;
+                return true;
 
             }
 
@@ -198,12 +222,7 @@ public class Login extends AppCompatActivity {
 
             if(mailValid.getText().toString().equals("")){
 
-                mailValid.setError("El camp email no pot estar vuit");
-                return false;
-
-            } else if(!Patterns.EMAIL_ADDRESS.matcher(mailValid.getText().toString()).matches()){
-                
-                mailValid.setError("Correo no valit");
+                mailValid.setError("El camp usuari no pot estar vuit");
                 return false;
 
             } else {
@@ -212,6 +231,89 @@ public class Login extends AppCompatActivity {
             }
 
         }
+
+        private void login(String username, String password) {
+            glpi = retrofit.create(GlpiClient.class);
+            Call<TokenInfo> call = glpi.initSession(username, password, apptoken);
+            call.enqueue(new Callback<TokenInfo>() {
+
+                @Override
+                public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
+
+                    if(response.isSuccessful()){
+
+                        data = response.body();
+                        Log.d("InitSessionResponse", response.toString());
+
+                        Log.d("InitSessionResponse", response.body().toString());
+
+                        getFullSession(call, response.body().getSessionToken());
+
+
+                    } else {
+
+                        ResponseBody body = response.errorBody();
+                        Log.d("ERROR", body.toString());
+
+                        try {
+
+                            Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TokenInfo> call, Throwable t) {}
+            });
+        }
+
+        private void getFullSession(Call<TokenInfo> call, final String sessionToken1) {
+            call = null;
+            call = glpi.getFullSession( sessionToken1 , apptoken);
+            call.enqueue(new Callback<TokenInfo>() {
+                @Override
+                public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
+
+                    Log.d("URL", call.request().url().toString());
+
+                    if(response.isSuccessful()){
+
+                        data = response.body();
+                        Log.d("DATA", "DATA" + " Funciona el full session");
+
+                        Toast.makeText(getContext(),"DATA" + sessionToken1, Toast.LENGTH_LONG).show();
+
+                    } else {
+
+                        ResponseBody body = response.errorBody();
+                        Log.d("ERROR", body.toString());
+
+                        try {
+
+                            Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    sessionToken = sessionToken1;
+
+                }
+
+                @Override
+                public void onFailure(Call<TokenInfo> call, Throwable t) {
+
+                    Context context = getContext();
+                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
+
+                }
+            });
+        }
+
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

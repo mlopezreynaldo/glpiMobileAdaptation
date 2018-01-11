@@ -28,12 +28,38 @@ public class RegisterUser {
     @Expose
     int phone;
 
-    public RegisterUser(String realname, String firstname, int profiles_id, String name, int phone) {
+    @SerializedName("_password")
+    @Expose
+    String _password;
+
+    @SerializedName("_confirmpassword")
+    @Expose
+    String _confirmpassword;
+
+    public RegisterUser(String realname, String firstname, int profiles_id, String name, int phone, String _password, String _confirmpassword) {
         this.realname = realname;
         this.firstname = firstname;
         this.profiles_id = profiles_id;
         this.name = name;
         this.phone = phone;
+        this._password = _password;
+        this._confirmpassword = _confirmpassword;
+    }
+
+    public String get_password() {
+        return _password;
+    }
+
+    public void set_password(String _password) {
+        this._password = _password;
+    }
+
+    public String get_confirmpassword() {
+        return _confirmpassword;
+    }
+
+    public void set_confirmpassword(String _confirmpassword) {
+        this._confirmpassword = _confirmpassword;
     }
 
     public String getRealname() {

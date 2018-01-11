@@ -54,13 +54,13 @@ public class MainActivityFragment extends Fragment {
         retrofit = builder.build();
 
         final Button login = view.findViewById(R.id.login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login();
-            }
-
-        });
+//        login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                login();
+//            }
+//
+//        });
 
         Button addIssue = view.findViewById(R.id.addIssue);
         addIssue.setOnClickListener(new View.OnClickListener() {
@@ -161,85 +161,85 @@ public class MainActivityFragment extends Fragment {
         });
     }
 
-    private void login() {
-        glpi = retrofit.create(GlpiClient.class);
-        Call<TokenInfo> call = glpi.initSession("glpi", "D1A2I3", apptoken);
-        call.enqueue(new Callback<TokenInfo>() {
-
-            @Override
-            public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
-
-                if(response.isSuccessful()){
-
-                   data = response.body();
-                   Log.d("InitSessionResponse", response.toString());
-
-                   Log.d("InitSessionResponse", response.body().toString());
-
-                    getFullSession(call, response.body().getSessionToken());
-
-
-                } else {
-
-                    ResponseBody body = response.errorBody();
-                    Log.d("ERROR", body.toString());
-
-                    try {
-
-                        Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TokenInfo> call, Throwable t) {}
-        });
-    }
-
-    private void getFullSession(Call<TokenInfo> call, final String sessionToken1) {
-        call = null;
-        call = glpi.getFullSession( sessionToken1 , apptoken);
-        call.enqueue(new Callback<TokenInfo>() {
-            @Override
-            public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
-
-                Log.d("URL", call.request().url().toString());
-
-                if(response.isSuccessful()){
-
-                    data = response.body();
-                    Log.d("DATA", "DATA" + " Funciona el full session");
-
-                    Toast.makeText(getContext(),"DATA" + sessionToken1, Toast.LENGTH_LONG).show();
-
-                } else {
-
-                    ResponseBody body = response.errorBody();
-                    Log.d("ERROR", body.toString());
-
-                    try {
-
-                        Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                sessionToken = sessionToken1;
-
-            }
-
-            @Override
-            public void onFailure(Call<TokenInfo> call, Throwable t) {
-
-                Context context = getContext();
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
-
-            }
-        });
-    }
+//    private void login() {
+//        glpi = retrofit.create(GlpiClient.class);
+//        Call<TokenInfo> call = glpi.initSession("glpi", "D1A2I3", apptoken);
+//        call.enqueue(new Callback<TokenInfo>() {
+//
+//            @Override
+//            public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
+//
+//                if(response.isSuccessful()){
+//
+//                   data = response.body();
+//                   Log.d("InitSessionResponse", response.toString());
+//
+//                   Log.d("InitSessionResponse", response.body().toString());
+//
+//                    getFullSession(call, response.body().getSessionToken());
+//
+//
+//                } else {
+//
+//                    ResponseBody body = response.errorBody();
+//                    Log.d("ERROR", body.toString());
+//
+//                    try {
+//
+//                        Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<TokenInfo> call, Throwable t) {}
+//        });
+//    }
+//
+//    private void getFullSession(Call<TokenInfo> call, final String sessionToken1) {
+//        call = null;
+//        call = glpi.getFullSession( sessionToken1 , apptoken);
+//        call.enqueue(new Callback<TokenInfo>() {
+//            @Override
+//            public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
+//
+//                Log.d("URL", call.request().url().toString());
+//
+//                if(response.isSuccessful()){
+//
+//                    data = response.body();
+//                    Log.d("DATA", "DATA" + " Funciona el full session");
+//
+//                    Toast.makeText(getContext(),"DATA" + sessionToken1, Toast.LENGTH_LONG).show();
+//
+//                } else {
+//
+//                    ResponseBody body = response.errorBody();
+//                    Log.d("ERROR", body.toString());
+//
+//                    try {
+//
+//                        Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                sessionToken = sessionToken1;
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<TokenInfo> call, Throwable t) {
+//
+//                Context context = getContext();
+//                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
+//
+//            }
+//        });
+//    }
 }
