@@ -1,6 +1,5 @@
 package com.miguel.gestorincidenciaapp;
 
-import android.content.Context;
 import android.support.design.widget.TabLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -20,17 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.regex.Pattern;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -39,6 +28,7 @@ public class Login extends AppCompatActivity {
     private static String usernameGet;
     private static String passwordGet;
     private static String phoneGet;
+
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -86,14 +76,12 @@ public class Login extends AppCompatActivity {
     public static class PlaceholderFragment extends Fragment {
 
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private String apptoken = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
-        private Retrofit retrofit;
-        private GlpiClient glpi;
-        private TokenInfo data;
-        private String sessionToken;
+
 
         public PlaceholderFragment() {
         }
+
+        private Retrofit retrofit;
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
@@ -115,6 +103,7 @@ public class Login extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create());
 
             retrofit = builder.build();
+            final LoginMethods calls = new LoginMethods(retrofit,getContext());
 
             View rootView = inflater.inflate(R.layout.mail, container, false);
             switch (getArguments().getInt(ARG_SECTION_NUMBER)){
@@ -126,31 +115,23 @@ public class Login extends AppCompatActivity {
                     final EditText mail = rootView.findViewById(R.id.edTxt_mail);
                     final EditText editPassword = rootView.findViewById(R.id.edTxT_passw);
 
-
                     btnLogin.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
                             if(isEmailValid(mail)){
-
                                 usernameGet = mail.getText().toString();
-
                             }
 
                             if(isPasswordValid(editPassword)){
-
                                 passwordGet = editPassword.getText().toString();
-
                             }
-
 
                             Log.d("DATA TO SEND",usernameGet + "    " + passwordGet );
 
-                            login(usernameGet,passwordGet);
-
+                            calls.login(usernameGet,passwordGet);
                             usernameGet = "";
                             passwordGet = "";
-
                         }
                     });
 
@@ -167,15 +148,11 @@ public class Login extends AppCompatActivity {
 
                         @Override
                         public void onClick(View view) {
-
                             if(isPhoneValid(edPhone)){
-
                                 phoneGet = edPhone.getText().toString();
                             }
                         }
                     });
-
-
                     break;
             }
 
@@ -230,88 +207,6 @@ public class Login extends AppCompatActivity {
                 return true;
             }
 
-        }
-
-        private void login(String username, String password) {
-            glpi = retrofit.create(GlpiClient.class);
-            Call<TokenInfo> call = glpi.initSession(username, password, apptoken);
-            call.enqueue(new Callback<TokenInfo>() {
-
-                @Override
-                public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
-
-                    if(response.isSuccessful()){
-
-                        data = response.body();
-                        Log.d("InitSessionResponse", response.toString());
-
-                        Log.d("InitSessionResponse", response.body().toString());
-
-                        getFullSession(call, response.body().getSessionToken());
-
-
-                    } else {
-
-                        ResponseBody body = response.errorBody();
-                        Log.d("ERROR", body.toString());
-
-                        try {
-
-                            Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<TokenInfo> call, Throwable t) {}
-            });
-        }
-
-        private void getFullSession(Call<TokenInfo> call, final String sessionToken1) {
-            call = null;
-            call = glpi.getFullSession( sessionToken1 , apptoken);
-            call.enqueue(new Callback<TokenInfo>() {
-                @Override
-                public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
-
-                    Log.d("URL", call.request().url().toString());
-
-                    if(response.isSuccessful()){
-
-                        data = response.body();
-                        Log.d("DATA", "DATA" + " Funciona el full session");
-
-                        Toast.makeText(getContext(),"DATA" + sessionToken1, Toast.LENGTH_LONG).show();
-
-                    } else {
-
-                        ResponseBody body = response.errorBody();
-                        Log.d("ERROR", body.toString());
-
-                        try {
-
-                            Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    sessionToken = sessionToken1;
-
-                }
-
-                @Override
-                public void onFailure(Call<TokenInfo> call, Throwable t) {
-
-                    Context context = getContext();
-                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
-
-                }
-            });
         }
 
     }
