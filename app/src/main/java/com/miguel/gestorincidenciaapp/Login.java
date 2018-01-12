@@ -1,5 +1,6 @@
 package com.miguel.gestorincidenciaapp;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -119,19 +120,22 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
 
-                            if(isEmailValid(mail)){
+                            if(isEmailValid(mail) && isPasswordValid(editPassword)){
                                 usernameGet = mail.getText().toString();
-                            }
-
-                            if(isPasswordValid(editPassword)){
                                 passwordGet = editPassword.getText().toString();
+
+
+                                calls.login(usernameGet,passwordGet);
+                                Intent menuApp = new Intent(getActivity(),MenuListView.class);
+                                startActivity(menuApp);
                             }
 
                             Log.d("DATA TO SEND",usernameGet + "    " + passwordGet );
+//
+//                            usernameGet = "";
+//                            passwordGet = "";
 
-                            calls.login(usernameGet,passwordGet);
-                            usernameGet = "";
-                            passwordGet = "";
+
                         }
                     });
 
