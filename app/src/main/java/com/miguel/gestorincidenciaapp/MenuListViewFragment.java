@@ -46,8 +46,6 @@ public class MenuListViewFragment extends Fragment {
         );
 
         menu.setAdapter(adapter);
-
-
         return view;
     }
 
