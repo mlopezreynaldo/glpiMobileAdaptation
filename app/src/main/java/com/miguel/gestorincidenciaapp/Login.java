@@ -107,6 +107,7 @@ public class Login extends AppCompatActivity {
             final LoginMethods calls = new LoginMethods(retrofit,getContext());
 
             View rootView = inflater.inflate(R.layout.mail, container, false);
+
             switch (getArguments().getInt(ARG_SECTION_NUMBER)){
                 case 1:
 
@@ -124,17 +125,14 @@ public class Login extends AppCompatActivity {
                                 usernameGet = mail.getText().toString();
                                 passwordGet = editPassword.getText().toString();
 
-
                                 calls.login(usernameGet,passwordGet);
                                 Intent menuApp = new Intent(getActivity(),MenuListView.class);
                                 startActivity(menuApp);
                             }
-
                             Log.d("DATA TO SEND",usernameGet + "    " + passwordGet );
 //
 //                            usernameGet = "";
 //                            passwordGet = "";
-
 
                         }
                     });

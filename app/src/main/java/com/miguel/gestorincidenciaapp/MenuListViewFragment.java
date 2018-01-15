@@ -31,8 +31,9 @@ public class MenuListViewFragment extends Fragment {
         ListView menu = view.findViewById(R.id.menuApp);
 
         String[] data = {
-                "Veure Incidencies",
-                "Modificar Incidencia"
+                "Incidencies Obertes",
+                "Incidencies Tancades",
+                "Incidencies Pendents"
         };
 
         items = new ArrayList<>(Arrays.asList(data));
