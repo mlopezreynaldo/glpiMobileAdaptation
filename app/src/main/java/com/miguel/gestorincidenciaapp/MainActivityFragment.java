@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +37,7 @@ public class MainActivityFragment extends Fragment {
     private GlpiClient glpi;
     private TokenInfo data;
     private String sessionToken;
+    private TicketJsonBuilder dataTicket;
 
     public MainActivityFragment() {
     }
@@ -78,14 +81,22 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
+        Button getAllIssues = view.findViewById(R.id.seeAllIssues);
+        getAllIssues.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                getAllIssues();
+
+            }
+        });
+
         Button newIntance = view.findViewById(R.id.buttonu);
         newIntance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent in = new Intent(getContext(),Login.class);
                 startActivity(in);
-
             }
         });
 
@@ -241,5 +252,40 @@ public class MainActivityFragment extends Fragment {
 
             }
         });
+    }
+
+    private void getAllIssues(){
+
+        glpi = retrofit.create(GlpiClient.class);
+        Call<TicketJsonBuilder> call = glpi.getAllIssues(apptoken, sessionToken);
+
+        call.enqueue(new Callback<TicketJsonBuilder>() {
+            @Override
+            public void onResponse(Call<TicketJsonBuilder> call, Response<TicketJsonBuilder> response) {
+
+                TicketCount count = new TicketCount();
+                count.getOpenedIssues(response.body().toString());
+
+                if(response.isSuccessful()){
+
+                    dataTicket = response.body();
+                    Log.d("DEBUG", dataTicket.toString());
+                    Toast.makeText(getContext(),"DATA" + dataTicket.toString(), Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    Toast.makeText(getContext(), "ERROR" + response.toString(), Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<TicketJsonBuilder> call, Throwable t) {
+
+            }
+        });
+
+
     }
 }

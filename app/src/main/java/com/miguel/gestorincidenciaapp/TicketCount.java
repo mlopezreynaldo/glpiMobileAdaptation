@@ -2,22 +2,13 @@ package com.miguel.gestorincidenciaapp;
 
 public class TicketCount {
 
-    public void getOpenedIssues(){
-
-
-
+    public void getOpenedIssues(String json){
     }
 
-    public void getClosedIssues(){
-
-
-
+    public void getClosedIssues(String json){
     }
 
-    public void getPendingIssues(){
-
-
-
+    public void getPendingIssues(String json){
     }
 
 }

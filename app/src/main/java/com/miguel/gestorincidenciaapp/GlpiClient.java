@@ -46,11 +46,9 @@ public interface GlpiClient {
 
 
     @GET("Ticket")
-    Call<String> getAllIsseus(
-
+    Call<TicketJsonBuilder> getAllIssues(
             @Query("app_token") String app_token,
             @Query("session_token") String session_token
-
     );
 
 
