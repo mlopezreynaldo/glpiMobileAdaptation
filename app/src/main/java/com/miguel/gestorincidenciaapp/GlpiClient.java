@@ -1,6 +1,7 @@
 package com.miguel.gestorincidenciaapp;
 
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -46,10 +47,11 @@ public interface GlpiClient {
 
 
     @GET("Ticket")
-    Call<TicketJsonBuilder> getAllIssues(
+    Call<List<TicketJsonBuilder>> getAllIssues(
             @Query("app_token") String app_token,
             @Query("session_token") String session_token
     );
+
 
 
 }

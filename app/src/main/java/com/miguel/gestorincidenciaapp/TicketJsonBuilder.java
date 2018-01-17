@@ -65,6 +65,15 @@ public class TicketJsonBuilder {
         this.type = type;
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -117,12 +126,8 @@ public class TicketJsonBuilder {
         return type;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getSolution() {
@@ -155,10 +160,6 @@ public class TicketJsonBuilder {
 
     public void setImpact(int impact) {
         this.impact = impact;
-    }
-
-    public void setType(int type) {
-        this.type = type;
     }
 
     @Override

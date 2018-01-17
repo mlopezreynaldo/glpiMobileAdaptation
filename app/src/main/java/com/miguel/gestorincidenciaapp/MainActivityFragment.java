@@ -15,9 +15,12 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -37,7 +40,8 @@ public class MainActivityFragment extends Fragment {
     private GlpiClient glpi;
     private TokenInfo data;
     private String sessionToken;
-    private TicketJsonBuilder dataTicket;
+    private ArrayList<TicketJsonBuilder> dataTicket;
+    private int closedIssues = 0;
 
     public MainActivityFragment() {
     }
@@ -257,35 +261,52 @@ public class MainActivityFragment extends Fragment {
     private void getAllIssues(){
 
         glpi = retrofit.create(GlpiClient.class);
-        Call<TicketJsonBuilder> call = glpi.getAllIssues(apptoken, sessionToken);
+        Call<List<TicketJsonBuilder>> call = glpi.getAllIssues(apptoken, sessionToken);
 
-        call.enqueue(new Callback<TicketJsonBuilder>() {
+        call.enqueue(new Callback<List<TicketJsonBuilder>>() {
             @Override
-            public void onResponse(Call<TicketJsonBuilder> call, Response<TicketJsonBuilder> response) {
+            public void onResponse(Call<List<TicketJsonBuilder>> call, Response<List<TicketJsonBuilder>> response) {
 
-                TicketCount count = new TicketCount();
-                count.getOpenedIssues(response.body().toString());
+                if (response.isSuccessful()) {
 
-                if(response.isSuccessful()){
+                    dataTicket = (ArrayList<TicketJsonBuilder>) response.body();
 
-                    dataTicket = response.body();
-                    Log.d("DEBUG", dataTicket.toString());
-                    Toast.makeText(getContext(),"DATA" + dataTicket.toString(), Toast.LENGTH_LONG).show();
+                    getClosedIssues(dataTicket);
+
+
+                    Log.d("PENEEEEEEEE", "  " + dataTicket.size());
+                    Log.d("PENEEEEEEEE", "  " + dataTicket.toString());
+                    Toast.makeText(getContext(), "DATA" + dataTicket.toString(), Toast.LENGTH_LONG).show();
 
                 } else {
 
                     Toast.makeText(getContext(), "ERROR" + response.toString(), Toast.LENGTH_LONG).show();
+                    Log.d("RETROFIT", response.errorBody().toString());
 
                 }
-
             }
 
             @Override
-            public void onFailure(Call<TicketJsonBuilder> call, Throwable t) {
+            public void onFailure(Call<List<TicketJsonBuilder>> call, Throwable t) {
 
             }
         });
 
+    }
+
+    public void getClosedIssues(ArrayList<TicketJsonBuilder> dataClosed) {
+
+        for (TicketJsonBuilder json : dataClosed) {
+
+            if(json.getStatus() == 6 ){
+
+                Log.d("DEBUG DEBUG", "  " + json.getName());
+                Log.d("DEBUG DEBUG", "  " + json.getId());
+                closedIssues++;
+                Log.d("DEBUG DEBUG", "  " + closedIssues);
+            }
+
+        }
 
     }
 }

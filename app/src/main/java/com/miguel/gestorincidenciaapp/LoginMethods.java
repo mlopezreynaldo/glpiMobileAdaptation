@@ -25,6 +25,14 @@ public class LoginMethods {
         this.context = context;
     }
 
+    public String getSessionToken() {
+        return sessionToken;
+    }
+
+    public void setSessionToken(String sessionToken) {
+        this.sessionToken = sessionToken;
+    }
+
     public void login(String username, String password) {
         glpi = retrofit.create(GlpiClient.class);
         Call<TokenInfo> call = glpi.initSession(username, password, apptoken);
@@ -93,7 +101,7 @@ public class LoginMethods {
                     }
                 }
 
-                sessionToken = sessionToken1;
+                setSessionToken(sessionToken1);
 
             }
 

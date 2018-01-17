@@ -127,12 +127,11 @@ public class Login extends AppCompatActivity {
 
                                 calls.login(usernameGet,passwordGet);
                                 Intent menuApp = new Intent(getActivity(),MenuListView.class);
+                                menuApp.putExtra("session_token", calls.getSessionToken());
                                 startActivity(menuApp);
+
                             }
                             Log.d("DATA TO SEND",usernameGet + "    " + passwordGet );
-//
-//                            usernameGet = "";
-//                            passwordGet = "";
 
                         }
                     });
@@ -228,7 +227,7 @@ public class Login extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
     }
 }
