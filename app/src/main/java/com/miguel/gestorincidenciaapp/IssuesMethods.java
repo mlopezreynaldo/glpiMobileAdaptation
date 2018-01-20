@@ -2,7 +2,6 @@ package com.miguel.gestorincidenciaapp;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +20,7 @@ public class IssuesMethods {
     private String sessionToken;
     private ArrayList<TicketJsonBuilder> dataTicket;
     private Context context;
-    private int closedIssues;
-
-    public int getClosedIssues() {
-        return closedIssues;
-    }
-
-    public void setClosedIssues(int closedIssues) {
-        this.closedIssues = closedIssues;
-    }
+    private int closedIssuesD;
 
     public IssuesMethods(Retrofit retrofit, Context context, String apptoken, String sessionToken) {
         this.apptoken = apptoken;
@@ -38,59 +29,56 @@ public class IssuesMethods {
         this.context = context;
     }
 
+
+    public int getClosedIssuesD() {
+        return closedIssuesD;
+    }
+
+    public void setClosedIssuesD(int closedIssuesD) {
+        this.closedIssuesD = closedIssuesD;
+    }
+
     private void getAllIssues() {
 
         glpi = retrofit.create(GlpiClient.class);
         Call<List<TicketJsonBuilder>> call = glpi.getAllIssues(apptoken, sessionToken);
 
         call.enqueue(new Callback<List<TicketJsonBuilder>>() {
+
             @Override
             public void onResponse(Call<List<TicketJsonBuilder>> call, Response<List<TicketJsonBuilder>> response) {
 
                 if (response.isSuccessful()) {
 
                     dataTicket = (ArrayList<TicketJsonBuilder>) response.body();
-//                    getClosedIssues(dataTicket);
-                    for (TicketJsonBuilder json : dataTicket) {
-                        if(json.getStatus() == 2){
-                            closedIssues++;
-                        }
-                    }
-                    setClosedIssues(closedIssues);
-                    Log.d("FUNCAAAAAAAAA?", "" + closedIssues);
-                } else {
-
-                    setClosedIssues(25);
-                    Log.d("FUNCAAAAAAAAA?FAIL", "" + closedIssues);
-
+                    getClosedIssues(dataTicket);
                 }
             }
+
             @Override
             public void onFailure(Call<List<TicketJsonBuilder>> call, Throwable t) {
-
-                setClosedIssues(25);
-                Log.d("FUNCAAAAAAAAA?FAIL", "" + closedIssues);
-
             }
-        });
 
+        });
     }
 
     private void getClosedIssues(ArrayList<TicketJsonBuilder> dataClosed) {
 
+        int da = 0;
+
         for (TicketJsonBuilder json : dataClosed) {
-            if(json.getStatus() == 2){
-                closedIssues++;
-            }
+            da++;
         }
-        setClosedIssues(closedIssues);
+
+        setClosedIssuesD(da);
+
     }
 
     public int countClosedIssues(){
 
         getAllIssues();
+        return getClosedIssuesD();
 
-        return closedIssues;
     }
 
 }
