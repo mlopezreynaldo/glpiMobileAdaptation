@@ -14,7 +14,7 @@ import retrofit2.Retrofit;
 
 public class IssuesMethods {
 
-    private String apptoken = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
+    private String apptoken;
     private Retrofit retrofit;
     private GlpiClient glpi;
     private TokenInfo data;
@@ -50,11 +50,26 @@ public class IssuesMethods {
                 if (response.isSuccessful()) {
 
                     dataTicket = (ArrayList<TicketJsonBuilder>) response.body();
-                    getClosedIssues(dataTicket);
+//                    getClosedIssues(dataTicket);
+                    for (TicketJsonBuilder json : dataTicket) {
+                        if(json.getStatus() == 2){
+                            closedIssues++;
+                        }
+                    }
+                    setClosedIssues(closedIssues);
+                    Log.d("FUNCAAAAAAAAA?", "" + closedIssues);
+                } else {
+
+                    setClosedIssues(25);
+                    Log.d("FUNCAAAAAAAAA?FAIL", "" + closedIssues);
+
                 }
             }
             @Override
             public void onFailure(Call<List<TicketJsonBuilder>> call, Throwable t) {
+
+                setClosedIssues(25);
+                Log.d("FUNCAAAAAAAAA?FAIL", "" + closedIssues);
 
             }
         });
@@ -69,12 +84,12 @@ public class IssuesMethods {
             }
         }
         setClosedIssues(closedIssues);
-        Log.d("CHECK", "         " + closedIssues);
     }
 
     public int countClosedIssues(){
+
         getAllIssues();
-        Log.d("DEEEEEEEBUG", "    " + getClosedIssues());
+
         return closedIssues;
     }
 

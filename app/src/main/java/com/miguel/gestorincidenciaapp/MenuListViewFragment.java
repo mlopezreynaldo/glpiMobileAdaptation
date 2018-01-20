@@ -1,5 +1,6 @@
 package com.miguel.gestorincidenciaapp;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +31,14 @@ public class MenuListViewFragment extends Fragment {
     private ArrayAdapter<String> adapter;
     private Retrofit retrofit;
     private String app_token = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
-    private String session_token = "6l9gsspc3v41todh6qdnib0e85";
+    private String session_token = "pv5svvq266ibi82gfioh6dqh21";
+
+
+    private GlpiClient glpi;
+    private TokenInfo data;
+    private ArrayList<TicketJsonBuilder> dataTicket;
+    private Context context;
+    private int closedIssues = 25;
 
     public MenuListViewFragment() {
     }
@@ -50,15 +58,14 @@ public class MenuListViewFragment extends Fragment {
         retrofit = builder.build();
 
 
-        IssuesMethods issues = new IssuesMethods(retrofit, getContext(), app_token, session_token);
-        issues.countClosedIssues();
+//        final IssuesMethods issues = new IssuesMethods(retrofit, getContext(), app_token, session_token);
+        getAllIssues();
+        String  show = "Incidencies Tancades   " + String.valueOf(closedIssues);
 
-        Log.d("ISSUESCOUNT","   " + issues.countClosedIssues());
-
-
+        Log.d("ADAPTER", show);
         String[] data = {
                 "Incidencies Obertes" ,
-                "Incidencies Tancades   " + issues.getClosedIssues(),
+                show,
                 "Incidencies Pendents"
         };
 
@@ -73,6 +80,51 @@ public class MenuListViewFragment extends Fragment {
 
         menu.setAdapter(adapter);
         return view;
+    }
+
+
+    private void getAllIssues() {
+
+        glpi = retrofit.create(GlpiClient.class);
+        Call<List<TicketJsonBuilder>> call = glpi.getAllIssues(app_token, session_token);
+
+        call.enqueue(new Callback<List<TicketJsonBuilder>>() {
+            @Override
+            public void onResponse(Call<List<TicketJsonBuilder>> call, Response<List<TicketJsonBuilder>> response) {
+
+                Log.d("DATA TO ITERATE", response.headers().toString());
+                Log.d("DATA TO ITERATE", "WIP :" + response.isSuccessful());
+
+                if (response.isSuccessful()) {
+
+                    closedIssues = 12;
+//                    dataTicket = (ArrayList<TicketJsonBuilder>) response.body();
+//                    getClosedIssues(dataTicket);
+
+                }
+            }
+            @Override
+            public void onFailure(Call<List<TicketJsonBuilder>> call, Throwable t) {
+            }
+        });
+
+    }
+
+    private void getClosedIssues(ArrayList<TicketJsonBuilder> dataClosed) {
+
+        for (TicketJsonBuilder json : dataClosed) {
+            Log.d("QUE PASA ", "       " + closedIssues);
+//            if(json.getStatus() == 2){
+                closedIssues++;
+//            }
+        }
+    }
+
+    public int countClosedIssues(){
+
+        getAllIssues();
+
+        return closedIssues;
     }
 
 
