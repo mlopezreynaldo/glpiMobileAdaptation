@@ -1,6 +1,7 @@
 package com.miguel.gestorincidenciaapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +32,7 @@ public class MenuListViewFragment extends Fragment {
     private ArrayAdapter<String> adapter;
     private Retrofit retrofit;
     private String app_token = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
-    private String session_token = "pv5svvq266ibi82gfioh6dqh21";
+    private String session_token;
 
 
     public MenuListViewFragment() {
@@ -42,6 +43,9 @@ public class MenuListViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_list_view, container, false);
 
+        session_token = savedInstanceState.getString("session_token");
+        Log.d("SHOW TOKEN",session_token);
+
         ListView menu = view.findViewById(R.id.menuApp);
 
         Retrofit.Builder builder = new Retrofit
@@ -51,16 +55,12 @@ public class MenuListViewFragment extends Fragment {
 
         retrofit = builder.build();
 
-        final IssuesMethods issues = new IssuesMethods(retrofit, getContext(), app_token, session_token);
+        IssuesMethods issues = new IssuesMethods(retrofit, getContext(), app_token, session_token);
 
-        String  show = "Incidencies Tancades   " + String.valueOf(issues.countClosedIssues());
-
-        int dataD = issues.countClosedIssues();
-        Log.d("ADAPTER" , "" + dataD);
 
         String[] data = {
                 "Incidencies Obertes" ,
-                show,
+                "Incidencies Tancades   " + issues.countClosedIssues(),
                 "Incidencies Pendents"
         };
 

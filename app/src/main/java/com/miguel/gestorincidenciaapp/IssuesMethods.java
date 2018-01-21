@@ -30,14 +30,6 @@ public class IssuesMethods {
     }
 
 
-    public int getClosedIssuesD() {
-        return closedIssuesD;
-    }
-
-    public void setClosedIssuesD(int closedIssuesD) {
-        this.closedIssuesD = closedIssuesD;
-    }
-
     private void getAllIssues() {
 
         glpi = retrofit.create(GlpiClient.class);
@@ -50,8 +42,8 @@ public class IssuesMethods {
 
                 if (response.isSuccessful()) {
 
-                    dataTicket = (ArrayList<TicketJsonBuilder>) response.body();
-                    getClosedIssues(dataTicket);
+                    IssuesMethods.this.dataTicket = (ArrayList<TicketJsonBuilder>) response.body();
+                    Log.d("DATA TO SEND","DATA" + closedIssuesD);
                 }
             }
 
@@ -62,22 +54,21 @@ public class IssuesMethods {
         });
     }
 
-    private void getClosedIssues(ArrayList<TicketJsonBuilder> dataClosed) {
+    private int getClosedIssues(ArrayList<TicketJsonBuilder> dataCount) {
 
-        int da = 0;
+        int da = 10;
 
-        for (TicketJsonBuilder json : dataClosed) {
-            da++;
-        }
+        Log.d("DATA TO SEND","DATA" + da);
 
-        setClosedIssuesD(da);
-
+        return da;
     }
 
     public int countClosedIssues(){
 
         getAllIssues();
-        return getClosedIssuesD();
+        Log.d("DATA TO SEND 1","DATA" + closedIssuesD);
+
+        return closedIssuesD;
 
     }
 
