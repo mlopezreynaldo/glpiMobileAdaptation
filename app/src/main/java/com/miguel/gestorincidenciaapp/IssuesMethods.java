@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+import com.alexvasilkov.events.Events;
+
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +35,11 @@ public class IssuesMethods {
     }
 
 
+    @Events.Subscribe("")
+    private void pepe(){
+
+    }
+
     public void closedIssues(ArrayAdapter<String> arrayAdapter) {
 
         glpi = retrofit.create(GlpiClient.class);
@@ -46,8 +53,6 @@ public class IssuesMethods {
                 if (response.isSuccessful()) {
 
                     dataTicket = (ArrayList<TicketJsonBuilder>) response.body();
-
-
 
                 } else {
                     ResponseBody error = response.errorBody();
