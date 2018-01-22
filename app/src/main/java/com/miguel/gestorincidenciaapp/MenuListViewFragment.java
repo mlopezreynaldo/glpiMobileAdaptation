@@ -32,7 +32,7 @@ public class MenuListViewFragment extends Fragment {
     private ArrayAdapter<String> adapter;
     private Retrofit retrofit;
     private String app_token = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
-    private String session_token;
+    private String session_token = "pp8mg4vdbnbvm9og9hff9etud4";
 
 
     public MenuListViewFragment() {
@@ -43,7 +43,6 @@ public class MenuListViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_list_view, container, false);
 
-        session_token = savedInstanceState.getString("session_token");
         Log.d("SHOW TOKEN",session_token);
 
         ListView menu = view.findViewById(R.id.menuApp);
@@ -60,7 +59,7 @@ public class MenuListViewFragment extends Fragment {
 
         String[] data = {
                 "Incidencies Obertes" ,
-                "Incidencies Tancades   " + issues.countClosedIssues(),
+                "Incidencies Tancades",
                 "Incidencies Pendents"
         };
 
@@ -74,6 +73,10 @@ public class MenuListViewFragment extends Fragment {
         );
 
         menu.setAdapter(adapter);
+        issues.closedIssues(adapter);
+
+
+
         return view;
     }
 

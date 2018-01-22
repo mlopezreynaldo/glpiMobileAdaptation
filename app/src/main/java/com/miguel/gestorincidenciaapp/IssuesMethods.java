@@ -2,10 +2,14 @@ package com.miguel.gestorincidenciaapp;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,7 +24,6 @@ public class IssuesMethods {
     private String sessionToken;
     private ArrayList<TicketJsonBuilder> dataTicket;
     private Context context;
-    private int closedIssuesD;
 
     public IssuesMethods(Retrofit retrofit, Context context, String apptoken, String sessionToken) {
         this.apptoken = apptoken;
@@ -30,7 +33,7 @@ public class IssuesMethods {
     }
 
 
-    private void getAllIssues() {
+    public void closedIssues(ArrayAdapter<String> arrayAdapter) {
 
         glpi = retrofit.create(GlpiClient.class);
         Call<List<TicketJsonBuilder>> call = glpi.getAllIssues(apptoken, sessionToken);
@@ -42,8 +45,13 @@ public class IssuesMethods {
 
                 if (response.isSuccessful()) {
 
-                    IssuesMethods.this.dataTicket = (ArrayList<TicketJsonBuilder>) response.body();
-                    Log.d("DATA TO SEND","DATA" + closedIssuesD);
+                    dataTicket = (ArrayList<TicketJsonBuilder>) response.body();
+
+
+
+                } else {
+                    ResponseBody error = response.errorBody();
+                    Log.e("XXX", error.toString());
                 }
             }
 
@@ -53,23 +61,4 @@ public class IssuesMethods {
 
         });
     }
-
-    private int getClosedIssues(ArrayList<TicketJsonBuilder> dataCount) {
-
-        int da = 10;
-
-        Log.d("DATA TO SEND","DATA" + da);
-
-        return da;
-    }
-
-    public int countClosedIssues(){
-
-        getAllIssues();
-        Log.d("DATA TO SEND 1","DATA" + closedIssuesD);
-
-        return closedIssuesD;
-
-    }
-
 }
