@@ -1,29 +1,19 @@
 package com.miguel.gestorincidenciaapp;
 
-import android.app.usage.UsageEvents;
-import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.alexvasilkov.events.Event;
 import com.alexvasilkov.events.Events;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -37,11 +27,16 @@ public class MenuListViewFragment extends Fragment {
     private Retrofit retrofit;
     private String app_token = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
     private String session_token = "pp8mg4vdbnbvm9og9hff9etud4";
-
+    private ListView menu;
 
     public MenuListViewFragment() {}
 
+    @Override
+    public void onStart() {
+        super.onStart();
 
+        Events.register(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +46,7 @@ public class MenuListViewFragment extends Fragment {
 
         Log.d("SHOW TOKEN",session_token);
 
-        ListView menu = view.findViewById(R.id.menuApp);
+        menu = view.findViewById(R.id.menuApp);
 
         Retrofit.Builder builder = new Retrofit
                 .Builder()
@@ -59,9 +54,6 @@ public class MenuListViewFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create());
 
         retrofit = builder.build();
-
-        IssuesMethods issues = new IssuesMethods(retrofit, getContext(), app_token, session_token);
-
 
         String[] data = {
                 "Incidencies Obertes" ,
@@ -79,11 +71,47 @@ public class MenuListViewFragment extends Fragment {
         );
 
         menu.setAdapter(adapter);
-        issues.closedIssues(adapter);
-
-
+        IssuesMethods issues = new IssuesMethods(retrofit,app_token,session_token);
+        issues.allIssues();
 
         return view;
     }
 
+    @Events.Subscribe("closed")
+    private void onClosedIssues(ArrayList<TicketJsonBuilder> data){
+
+        int closedCont = 0;
+        int openedCont = 0;
+
+        for (TicketJsonBuilder closed : data) {
+
+            if(closed.getStatus() == 6){
+                closedCont++;
+
+            }
+
+            if(closed.getStatus() == 2){
+                openedCont++;
+            }
+
+        }
+
+        String[] dataS = {
+                "Incidencies Obertes    "  + openedCont,
+                "Incidencies Tancades   " + closedCont,
+                "Incidencies Pendents"
+        };
+
+        items = new ArrayList<>(Arrays.asList(dataS));
+
+        adapter = new ArrayAdapter<>(
+                getContext(),
+                R.layout.menu_app_layout,
+                R.id.tituloMenu,
+                items
+        );
+
+        menu.setAdapter(adapter);
+
+    }
 }

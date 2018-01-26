@@ -25,22 +25,15 @@ public class IssuesMethods {
     private TokenInfo data;
     private String sessionToken;
     private ArrayList<TicketJsonBuilder> dataTicket;
-    private Context context;
 
-    public IssuesMethods(Retrofit retrofit, Context context, String apptoken, String sessionToken) {
+    public IssuesMethods(Retrofit retrofit, String apptoken, String sessionToken) {
         this.apptoken = apptoken;
         this.retrofit = retrofit;
         this.sessionToken = sessionToken;
-        this.context = context;
     }
 
 
-    @Events.Subscribe("")
-    private void pepe(){
-
-    }
-
-    public void closedIssues(ArrayAdapter<String> arrayAdapter) {
+    public void allIssues() {
 
         glpi = retrofit.create(GlpiClient.class);
         Call<List<TicketJsonBuilder>> call = glpi.getAllIssues(apptoken, sessionToken);
@@ -52,12 +45,16 @@ public class IssuesMethods {
 
                 if (response.isSuccessful()) {
 
+
                     dataTicket = (ArrayList<TicketJsonBuilder>) response.body();
+                    Events.create("closed").param(dataTicket).post();
 
                 } else {
+
                     ResponseBody error = response.errorBody();
                     Log.e("XXX", error.toString());
                 }
+
             }
 
             @Override
@@ -66,4 +63,5 @@ public class IssuesMethods {
 
         });
     }
+
 }
