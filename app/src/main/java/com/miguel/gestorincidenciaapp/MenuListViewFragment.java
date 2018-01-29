@@ -1,5 +1,6 @@
 package com.miguel.gestorincidenciaapp;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,7 @@ public class MenuListViewFragment extends Fragment {
     private ArrayAdapter<String> adapter;
     private Retrofit retrofit;
     private String app_token = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
-    private String session_token = "pp8mg4vdbnbvm9og9hff9etud4";
+    private String session_token;
     private ListView menu;
 
     public MenuListViewFragment() {}
@@ -41,10 +42,7 @@ public class MenuListViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_menu_list_view, container, false);
-
-        Log.d("SHOW TOKEN",session_token);
 
         menu = view.findViewById(R.id.menuApp);
 

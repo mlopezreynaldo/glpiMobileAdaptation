@@ -29,8 +29,7 @@ public class Login extends AppCompatActivity {
     private static String usernameGet;
     private static String passwordGet;
     private static String phoneGet;
-
-
+    
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
@@ -126,7 +125,8 @@ public class Login extends AppCompatActivity {
                                 passwordGet = editPassword.getText().toString();
 
                                 calls.login(usernameGet,passwordGet);
-                                Intent menuApp = new Intent(getActivity(),MenuListView.class);
+
+                                Intent menuApp = new Intent(getContext(),MenuListView.class);
                                 menuApp.putExtra("session_token", calls.getSessionToken());
                                 startActivity(menuApp);
 

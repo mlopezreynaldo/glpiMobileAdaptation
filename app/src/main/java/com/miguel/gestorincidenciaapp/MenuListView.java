@@ -12,7 +12,6 @@ public class MenuListView extends AppCompatActivity {
         setContentView(R.layout.activity_menu_list_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
     @Override
