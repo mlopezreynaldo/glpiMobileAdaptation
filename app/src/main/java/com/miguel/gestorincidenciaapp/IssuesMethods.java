@@ -45,7 +45,6 @@ public class IssuesMethods {
 
                 if (response.isSuccessful()) {
 
-
                     dataTicket = (ArrayList<TicketJsonBuilder>) response.body();
                     Events.create("closed").param(dataTicket).post();
 

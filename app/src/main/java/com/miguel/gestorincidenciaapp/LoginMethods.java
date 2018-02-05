@@ -17,7 +17,7 @@ public class LoginMethods {
     private Retrofit retrofit;
     private GlpiClient glpi;
     private TokenInfo data;
-    private String sessionToken;
+    private String sessionToken = "s8fp7lrsir84k81om79uvddqi7";
     private Context context;
 
     public LoginMethods(Retrofit retrofit, Context context) {
@@ -44,12 +44,7 @@ public class LoginMethods {
                 if(response.isSuccessful()){
 
                     data = response.body();
-                    Log.d("InitSessionResponse", response.toString());
-
-                    Log.d("InitSessionResponse", response.body().toString());
-
                     getFullSession(call, response.body().getSessionToken());
-
 
                 } else {
 

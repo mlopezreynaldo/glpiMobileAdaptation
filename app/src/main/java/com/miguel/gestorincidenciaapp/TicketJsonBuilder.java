@@ -3,8 +3,10 @@ package com.miguel.gestorincidenciaapp;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class TicketJsonBuilder {
+
+public class TicketJsonBuilder implements Serializable{
 
     @SerializedName("id")
     @Expose
