@@ -27,6 +27,7 @@ public class MenuListViewFragment extends Fragment {
 
     private ArrayList<String> items;
     private ArrayAdapter<String> adapter;
+    private ArrayList<TicketJsonBuilder> dataSendList;
     private Retrofit retrofit;
     private String app_token = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
     private String session_token = "s8fp7lrsir84k81om79uvddqi7";
@@ -78,7 +79,7 @@ public class MenuListViewFragment extends Fragment {
 
                 String jsonBuilder = (String) adapterView.getItemAtPosition(i);
                 Intent intent = new Intent(getContext(), DetailIssue.class);
-                intent.putExtra("issues", (Serializable) jsonBuilder);
+                intent.putExtra("issues", dataSendList);
                 startActivity(intent);
 
             }
@@ -93,6 +94,8 @@ public class MenuListViewFragment extends Fragment {
     @Events.Subscribe("closed")
     private void onClosedIssues(ArrayList<TicketJsonBuilder> data){
 
+        dataSendList = data;
+
         int closedCont = 0;
         int openedCont = 0;
         int pendingCont = 0;
@@ -101,7 +104,6 @@ public class MenuListViewFragment extends Fragment {
 
             if(closed.getStatus() == 6){
                 closedCont++;
-
             }
 
             if(closed.getStatus() == 2){
