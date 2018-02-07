@@ -166,20 +166,7 @@ public class TicketJsonBuilder implements Serializable{
 
     @Override
     public String toString() {
-        return "TicketJsonBuilder{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", date='" + date + '\'' +
-                ", status=" + status +
-                ", content='" + content + '\'' +
-                ", urgency=" + urgency +
-                ", priority=" + priority +
-                ", type=" + type +
-                ", solution='" + solution + '\'' +
-                ", closeDate='" + closeDate + '\'' +
-                ", solveDate='" + solveDate + '\'' +
-                ", impact=" + impact +
-                '}';
+        return name;
     }
 }
 

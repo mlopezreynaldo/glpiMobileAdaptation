@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -30,6 +32,7 @@ public class DetailIssueFragment extends Fragment {
         View inflate = inflater.inflate(R.layout.fragment_detail_issue, container, false);
 
         Intent i = getActivity().getIntent();
+
         listView = inflate.findViewById(R.id.details);
 
         if(i != null){
@@ -38,20 +41,18 @@ public class DetailIssueFragment extends Fragment {
 
             if(jsonBuilder != null){
 
-                items = new ArrayList<>();
                 items = jsonBuilder;
+                items = new ArrayList<>(items);
 
-                adapter = new ArrayAdapter<TicketJsonBuilder>(
+                adapter = new ArrayAdapter<>(
                         getContext(),
-                        R.layout.fragment_detail_issue,
-                        R.id.tituloMenu,
+                        R.layout.details_app_layout,
+                        R.id.titleIssues,
                         items
                 );
 
                 listView.setAdapter(adapter);
 
-                Log.d("DATA JSON",jsonBuilder.get(1).getName());
-                Log.d("DATA", "DATA IS IRIGHYT");
             }
         }
 

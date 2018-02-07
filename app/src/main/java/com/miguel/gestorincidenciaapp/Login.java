@@ -131,8 +131,6 @@ public class Login extends AppCompatActivity {
                                 startActivity(menuApp);
 
                             }
-                            Log.d("DATA TO SEND",usernameGet + "    " + passwordGet );
-
                         }
                     });
 

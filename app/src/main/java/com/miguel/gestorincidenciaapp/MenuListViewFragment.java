@@ -30,7 +30,7 @@ public class MenuListViewFragment extends Fragment {
     private ArrayList<TicketJsonBuilder> dataSendList;
     private Retrofit retrofit;
     private String app_token = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
-    private String session_token = "s8fp7lrsir84k81om79uvddqi7";
+    private String session_token;
     private ListView menu;
 
     public MenuListViewFragment() {}
@@ -46,6 +46,9 @@ public class MenuListViewFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_list_view, container, false);
+
+        Intent getSession = getActivity().getIntent();
+        session_token = (String) getSession.getSerializableExtra("session_token");
 
         menu = view.findViewById(R.id.menuApp);
 

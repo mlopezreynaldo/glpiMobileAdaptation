@@ -45,19 +45,9 @@ public class LoginMethods {
 
                     data = response.body();
                     getFullSession(call, response.body().getSessionToken());
-
                 } else {
 
                     ResponseBody body = response.errorBody();
-                    Log.d("ERROR", body.toString());
-
-                    try {
-
-                        Toast.makeText(context, "ERROR" + body.string(), Toast.LENGTH_LONG).show();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
 
@@ -73,27 +63,13 @@ public class LoginMethods {
             @Override
             public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
 
-                Log.d("URL", call.request().url().toString());
-
                 if(response.isSuccessful()){
 
                     data = response.body();
-                    Log.d("DATA", "DATA" + " Funciona el full session");
-
-                    Toast.makeText(context,"DATA" + sessionToken1, Toast.LENGTH_LONG).show();
 
                 } else {
 
                     ResponseBody body = response.errorBody();
-                    Log.d("ERROR", body.toString());
-
-                    try {
-
-                        Toast.makeText(context, "ERROR" + body.string(), Toast.LENGTH_LONG).show();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
 
                 setSessionToken(sessionToken1);
@@ -102,9 +78,6 @@ public class LoginMethods {
 
             @Override
             public void onFailure(Call<TokenInfo> call, Throwable t) {
-
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
-
             }
         });
     }
