@@ -22,12 +22,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Login"
+            android:name=".Login.Login"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MenuListView"
             android:label="@string/title_activity_menu_list_view"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DetailIssue"
+            android:label="@string/title_activity_detail_issue"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DetailedIssue"
+            android:label="@string/title_activity_detailed_issue"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

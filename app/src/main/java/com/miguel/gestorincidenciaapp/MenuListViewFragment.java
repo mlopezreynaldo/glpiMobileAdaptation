@@ -1,16 +1,19 @@
 package com.miguel.gestorincidenciaapp;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.alexvasilkov.events.Events;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,9 +27,10 @@ public class MenuListViewFragment extends Fragment {
 
     private ArrayList<String> items;
     private ArrayAdapter<String> adapter;
+    private ArrayList<TicketJsonBuilder> dataSendList;
     private Retrofit retrofit;
     private String app_token = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
-    private String session_token = "pp8mg4vdbnbvm9og9hff9etud4";
+    private String session_token;
     private ListView menu;
 
     public MenuListViewFragment() {}
@@ -39,12 +43,12 @@ public class MenuListViewFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_menu_list_view, container, false);
 
-        Log.d("SHOW TOKEN",session_token);
+        Intent getSession = getActivity().getIntent();
+        session_token = (String) getSession.getSerializableExtra("session_token");
 
         menu = view.findViewById(R.id.menuApp);
 
@@ -54,6 +58,7 @@ public class MenuListViewFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create());
 
         retrofit = builder.build();
+
 
         String[] data = {
                 "Incidencies Obertes" ,
@@ -71,6 +76,18 @@ public class MenuListViewFragment extends Fragment {
         );
 
         menu.setAdapter(adapter);
+        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String jsonBuilder = (String) adapterView.getItemAtPosition(i);
+                Intent intent = new Intent(getContext(), DetailIssue.class);
+                intent.putExtra("issues", dataSendList);
+                startActivity(intent);
+
+            }
+        });
+
         IssuesMethods issues = new IssuesMethods(retrofit,app_token,session_token);
         issues.allIssues();
 
@@ -80,14 +97,16 @@ public class MenuListViewFragment extends Fragment {
     @Events.Subscribe("closed")
     private void onClosedIssues(ArrayList<TicketJsonBuilder> data){
 
+        dataSendList = data;
+
         int closedCont = 0;
         int openedCont = 0;
+        int pendingCont = 0;
 
         for (TicketJsonBuilder closed : data) {
 
             if(closed.getStatus() == 6){
                 closedCont++;
-
             }
 
             if(closed.getStatus() == 2){
@@ -96,10 +115,11 @@ public class MenuListViewFragment extends Fragment {
 
         }
 
+
         String[] dataS = {
                 "Incidencies Obertes    "  + openedCont,
                 "Incidencies Tancades   " + closedCont,
-                "Incidencies Pendents"
+                "Incidencies Pendents   " + pendingCont
         };
 
         items = new ArrayList<>(Arrays.asList(dataS));
@@ -114,4 +134,5 @@ public class MenuListViewFragment extends Fragment {
         menu.setAdapter(adapter);
 
     }
+
 }

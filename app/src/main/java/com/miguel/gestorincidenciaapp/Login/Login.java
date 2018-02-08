@@ -1,4 +1,4 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.Login;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -21,6 +21,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.miguel.gestorincidenciaapp.MenuListView;
+import com.miguel.gestorincidenciaapp.R;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -29,8 +32,7 @@ public class Login extends AppCompatActivity {
     private static String usernameGet;
     private static String passwordGet;
     private static String phoneGet;
-
-
+    
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
@@ -126,13 +128,12 @@ public class Login extends AppCompatActivity {
                                 passwordGet = editPassword.getText().toString();
 
                                 calls.login(usernameGet,passwordGet);
-                                Intent menuApp = new Intent(getActivity(),MenuListView.class);
+
+                                Intent menuApp = new Intent(getContext(),MenuListView.class);
                                 menuApp.putExtra("session_token", calls.getSessionToken());
                                 startActivity(menuApp);
 
                             }
-                            Log.d("DATA TO SEND",usernameGet + "    " + passwordGet );
-
                         }
                     });
 

@@ -1,8 +1,11 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.Login;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.miguel.gestorincidenciaapp.GlpiClient;
+import com.miguel.gestorincidenciaapp.TokenInfo;
 
 import java.io.IOException;
 
@@ -17,7 +20,7 @@ public class LoginMethods {
     private Retrofit retrofit;
     private GlpiClient glpi;
     private TokenInfo data;
-    private String sessionToken;
+    private String sessionToken = "s8fp7lrsir84k81om79uvddqi7";
     private Context context;
 
     public LoginMethods(Retrofit retrofit, Context context) {
@@ -44,25 +47,10 @@ public class LoginMethods {
                 if(response.isSuccessful()){
 
                     data = response.body();
-                    Log.d("InitSessionResponse", response.toString());
-
-                    Log.d("InitSessionResponse", response.body().toString());
-
                     getFullSession(call, response.body().getSessionToken());
-
-
                 } else {
 
                     ResponseBody body = response.errorBody();
-                    Log.d("ERROR", body.toString());
-
-                    try {
-
-                        Toast.makeText(context, "ERROR" + body.string(), Toast.LENGTH_LONG).show();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
 
@@ -78,27 +66,13 @@ public class LoginMethods {
             @Override
             public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
 
-                Log.d("URL", call.request().url().toString());
-
                 if(response.isSuccessful()){
 
                     data = response.body();
-                    Log.d("DATA", "DATA" + " Funciona el full session");
-
-                    Toast.makeText(context,"DATA" + sessionToken1, Toast.LENGTH_LONG).show();
 
                 } else {
 
                     ResponseBody body = response.errorBody();
-                    Log.d("ERROR", body.toString());
-
-                    try {
-
-                        Toast.makeText(context, "ERROR" + body.string(), Toast.LENGTH_LONG).show();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
 
                 setSessionToken(sessionToken1);
@@ -107,9 +81,6 @@ public class LoginMethods {
 
             @Override
             public void onFailure(Call<TokenInfo> call, Throwable t) {
-
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
-
             }
         });
     }
