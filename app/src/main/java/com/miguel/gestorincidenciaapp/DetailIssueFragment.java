@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -52,6 +53,16 @@ public class DetailIssueFragment extends Fragment {
                 );
 
                 listView.setAdapter(adapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        TicketJsonBuilder objectToSend = (TicketJsonBuilder) adapterView.getItemAtPosition(i);
+                        Intent intent = new Intent(getContext(), DetailedIssue.class);
+                        intent.putExtra("issueSelected", objectToSend);
+                        startActivity(intent);
+                    }
+                });
 
             }
         }

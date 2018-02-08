@@ -1,8 +1,11 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.Login;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.miguel.gestorincidenciaapp.GlpiClient;
+import com.miguel.gestorincidenciaapp.TokenInfo;
 
 import java.io.IOException;
 
