@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -18,12 +19,12 @@ import org.w3c.dom.Text;
 public class DetailedIssueFragment extends Fragment {
 
     private TicketJsonBuilder object;
-    private TextView title;
-    private TextView date;
-    private TextView status;
-    private TextView urgency;
-    private TextView priority;
-    private TextView description;
+    private EditText title;
+    private EditText date;
+    private EditText status;
+    private EditText urgency;
+    private EditText priority;
+    private EditText description;
 
 
     public DetailedIssueFragment() {
@@ -43,19 +44,17 @@ public class DetailedIssueFragment extends Fragment {
         description = inflate.findViewById(R.id.description);
 
         Intent i = getActivity().getIntent();
-
         if(i != null) {
 
             object = (TicketJsonBuilder) i.getSerializableExtra("issueSelected");
 
             title.setText(object.getName());
             date.setText(object.getDate());
-//            status.setText(object.getStatus());
-//            urgency.setText(object.getUrgency());
-//            priority.setText(object.getPriority());
+//            status.setText(statusI);
+//            urgency.setText(urgencyI);
+//            priority.setText(priorityI);
+            description.setText(object.getContent());
 
-
-            Log.d("MUSTARD",object.getName());
 
         }
 

@@ -67,11 +67,9 @@ public class TicketJsonBuilder implements Serializable{
         this.type = type;
     }
 
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -79,7 +77,6 @@ public class TicketJsonBuilder implements Serializable{
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -87,7 +84,6 @@ public class TicketJsonBuilder implements Serializable{
     public String getDate() {
         return date;
     }
-
     public void setDate(String date) {
         this.date = date;
     }
@@ -95,7 +91,6 @@ public class TicketJsonBuilder implements Serializable{
     public int getStatus() {
         return status;
     }
-
     public void setStatus(int status) {
         this.status = status;
     }
@@ -103,7 +98,6 @@ public class TicketJsonBuilder implements Serializable{
     public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
@@ -111,7 +105,6 @@ public class TicketJsonBuilder implements Serializable{
     public int getUrgency() {
         return urgency;
     }
-
     public void setUrgency(int urgency) {
         this.urgency = urgency;
     }
@@ -119,7 +112,6 @@ public class TicketJsonBuilder implements Serializable{
     public int getPriority() {
         return priority;
     }
-
     public void setPriority(int priority) {
         this.priority = priority;
     }
@@ -127,7 +119,6 @@ public class TicketJsonBuilder implements Serializable{
     public int getType() {
         return type;
     }
-
     public void setType(int type) {
         this.type = type;
     }
@@ -135,7 +126,6 @@ public class TicketJsonBuilder implements Serializable{
     public String getSolution() {
         return solution;
     }
-
     public void setSolution(String solution) {
         this.solution = solution;
     }
@@ -143,7 +133,6 @@ public class TicketJsonBuilder implements Serializable{
     public String getCloseDate() {
         return closeDate;
     }
-
     public void setCloseDate(String closeDate) {
         this.closeDate = closeDate;
     }
@@ -151,7 +140,6 @@ public class TicketJsonBuilder implements Serializable{
     public String getSolveDate() {
         return solveDate;
     }
-
     public void setSolveDate(String solveDate) {
         this.solveDate = solveDate;
     }
@@ -159,7 +147,6 @@ public class TicketJsonBuilder implements Serializable{
     public int getImpact() {
         return impact;
     }
-
     public void setImpact(int impact) {
         this.impact = impact;
     }
