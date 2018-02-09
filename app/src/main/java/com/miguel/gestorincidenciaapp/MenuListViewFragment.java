@@ -99,6 +99,8 @@ public class MenuListViewFragment extends Fragment {
 
         dataSendList = data;
 
+        Log.d("DATA GETTED",data.toString());
+
         int closedCont = 0;
         int openedCont = 0;
         int pendingCont = 0;

@@ -20,10 +20,9 @@ public class DetailIssue extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Añadir Issues", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Abriendo QR Camera", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
     }
-
 }

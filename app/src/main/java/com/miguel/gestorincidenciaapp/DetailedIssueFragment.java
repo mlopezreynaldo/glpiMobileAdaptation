@@ -1,6 +1,8 @@
 package com.miguel.gestorincidenciaapp;
 
 import android.content.Intent;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,10 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -19,12 +17,12 @@ import org.w3c.dom.Text;
 public class DetailedIssueFragment extends Fragment {
 
     private TicketJsonBuilder object;
-    private EditText title;
-    private EditText date;
-    private EditText status;
-    private EditText urgency;
-    private EditText priority;
-    private EditText description;
+    private TextInputEditText title;
+    private TextInputEditText date;
+    private TextInputEditText status;
+    private TextInputEditText urgency;
+    private TextInputEditText priority;
+    private TextInputEditText description;
 
 
     public DetailedIssueFragment() {
@@ -48,14 +46,18 @@ public class DetailedIssueFragment extends Fragment {
 
             object = (TicketJsonBuilder) i.getSerializableExtra("issueSelected");
 
+            Log.d("DATA GETTED",object.toti());
+
             title.setText(object.getName());
             date.setText(object.getDate());
-//            status.setText(statusI);
-//            urgency.setText(urgencyI);
-//            priority.setText(priorityI);
+
+            status.setText(String.valueOf(object.getStatus()));
+            urgency.setText(String.valueOf(object.getUrgency()));
+            priority.setText(String.valueOf(object.getPriority()));
+
             description.setText(object.getContent());
 
-
+            Log.d("DATA GETTED",object.toti());
         }
 
         return inflate;

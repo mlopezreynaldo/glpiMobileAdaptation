@@ -43,6 +43,9 @@ public class DetailIssueFragment extends Fragment {
             if(jsonBuilder != null){
 
                 items = jsonBuilder;
+
+                Log.d("DATA GETTED", jsonBuilder.toString());
+
                 items = new ArrayList<>(items);
 
                 adapter = new ArrayAdapter<>(
