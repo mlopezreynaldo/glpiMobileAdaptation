@@ -1,8 +1,10 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.ListViewMain;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.miguel.gestorincidenciaapp.R;
 
 public class MenuListView extends AppCompatActivity {
 

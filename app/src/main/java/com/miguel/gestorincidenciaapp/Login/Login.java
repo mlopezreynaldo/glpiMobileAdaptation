@@ -21,7 +21,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.miguel.gestorincidenciaapp.MenuListView;
+import com.miguel.gestorincidenciaapp.ListViewMain.MenuListView;
+import com.miguel.gestorincidenciaapp.Methods.LoginMethods;
 import com.miguel.gestorincidenciaapp.R;
 
 import retrofit2.Retrofit;

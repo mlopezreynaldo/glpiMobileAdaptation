@@ -1,5 +1,9 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.APInterface;
 
+
+import com.miguel.gestorincidenciaapp.POJO.RegisterUser;
+import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
+import com.miguel.gestorincidenciaapp.POJO.TokenInfo;
 
 import java.util.List;
 import java.util.Map;

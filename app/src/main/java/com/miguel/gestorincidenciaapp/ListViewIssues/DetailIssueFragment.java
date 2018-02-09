@@ -1,4 +1,4 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.ListViewIssues;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -11,9 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.lang.reflect.Array;
+import com.miguel.gestorincidenciaapp.DetailedIssue.DetailedIssue;
+import com.miguel.gestorincidenciaapp.R;
+import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A placeholder fragment containing a simple view.

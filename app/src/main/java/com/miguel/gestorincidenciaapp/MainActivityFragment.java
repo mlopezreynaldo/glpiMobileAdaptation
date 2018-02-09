@@ -12,7 +12,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.miguel.gestorincidenciaapp.APInterface.GlpiClient;
 import com.miguel.gestorincidenciaapp.Login.Login;
+import com.miguel.gestorincidenciaapp.POJO.RegisterUser;
+import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
+import com.miguel.gestorincidenciaapp.POJO.TokenInfo;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

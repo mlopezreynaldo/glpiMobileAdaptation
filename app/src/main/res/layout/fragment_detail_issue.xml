@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailIssueFragment"
+    tools:context=".ListViewIssues.DetailIssueFragment"
     tools:showIn="@layout/activity_detail_issue">
 
     <ListView

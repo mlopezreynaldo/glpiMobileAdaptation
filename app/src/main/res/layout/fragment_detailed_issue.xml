@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="0dp"
     android:layout_height="match_parent"
-    tools:context=".DetailedIssueFragment"
+    tools:context=".DetailedIssue.DetailedIssueFragment"
     tools:layout_editor_absoluteY="137dp"
     tools:showIn="@layout/activity_detailed_issue">
 

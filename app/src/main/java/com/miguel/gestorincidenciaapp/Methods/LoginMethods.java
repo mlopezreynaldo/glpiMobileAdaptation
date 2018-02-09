@@ -1,13 +1,9 @@
-package com.miguel.gestorincidenciaapp.Login;
+package com.miguel.gestorincidenciaapp.Methods;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.miguel.gestorincidenciaapp.GlpiClient;
-import com.miguel.gestorincidenciaapp.TokenInfo;
-
-import java.io.IOException;
+import com.miguel.gestorincidenciaapp.APInterface.GlpiClient;
+import com.miguel.gestorincidenciaapp.POJO.TokenInfo;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

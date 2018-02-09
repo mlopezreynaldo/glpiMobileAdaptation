@@ -1,15 +1,16 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.DetailedIssue;
 
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+
+import com.miguel.gestorincidenciaapp.R;
+import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
 
 /**
  * A placeholder fragment containing a simple view.
