@@ -15,6 +15,12 @@ android {
             url "https://jitpack.io"
         }
     }
+    android {
+        compileOptions {
+            sourceCompatibility 1.8
+            targetCompatibility 1.8
+        }
+    }
     buildTypes {
         release {
             postprocessing {
@@ -46,5 +52,5 @@ dependencies {
     implementation "android.arch.lifecycle:runtime:1.0.0-alpha9"
     implementation "android.arch.lifecycle:extensions:1.0.0-alpha9"
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha9"
-    implementation 'com.github.dekoservidoni:omfm:1.1.1'
+    implementation 'com.hlab.fabrevealmenu:fab-reveal-menu:1.0.3'
 }

@@ -1,6 +1,7 @@
 package com.miguel.gestorincidenciaapp.DetailedIssue;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -24,11 +25,11 @@ public class DetailedIssueFragment extends Fragment {
     private TextInputEditText urgency;
     private TextInputEditText priority;
     private TextInputEditText description;
+    private boolean inputsEnabled;
 
 
     public DetailedIssueFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,22 +44,50 @@ public class DetailedIssueFragment extends Fragment {
         description = inflate.findViewById(R.id.description);
 
         Intent i = getActivity().getIntent();
+        inputsEnabled = (boolean) i.getSerializableExtra("inputEnabled");
+
+
         if(i != null) {
 
-            object = (TicketJsonBuilder) i.getSerializableExtra("issueSelected");
 
-            Log.d("DATA GETTED",object.toti());
+            if(!inputsEnabled){
 
-            title.setText(object.getName());
-            date.setText(object.getDate());
+                object = (TicketJsonBuilder) i.getSerializableExtra("issueSelected");
 
-            status.setText(String.valueOf(object.getStatus()));
-            urgency.setText(String.valueOf(object.getUrgency()));
-            priority.setText(String.valueOf(object.getPriority()));
+                Log.d("DATA GETTED",object.toti());
 
-            description.setText(object.getContent());
+                title.setText(object.getName());
+                title.setFocusable(false);
+                title.setBackgroundColor(Color.TRANSPARENT);
 
-            Log.d("DATA GETTED",object.toti());
+                date.setText(object.getDate());
+                date.setFocusable(false);
+                date.setBackgroundColor(Color.TRANSPARENT);
+
+                status.setText(String.valueOf(object.getStatus()));
+                status.setFocusable(false);
+                status.setBackgroundColor(Color.TRANSPARENT);
+
+                urgency.setText(String.valueOf(object.getUrgency()));
+                urgency.setFocusable(false);
+                urgency.setBackgroundColor(Color.TRANSPARENT);
+
+                priority.setText(String.valueOf(object.getPriority()));
+                priority.setFocusable(false);
+                priority.setBackgroundColor(Color.TRANSPARENT);
+
+
+                description.setText(object.getContent());
+                description.setFocusable(false);
+                description.setBackgroundColor(Color.TRANSPARENT);
+
+                Log.d("DATA GETTED",object.toti());
+
+            } else {
+
+
+
+            }
         }
 
         return inflate;

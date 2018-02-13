@@ -65,13 +65,12 @@ public class DetailIssueFragment extends Fragment {
                         TicketJsonBuilder objectToSend = (TicketJsonBuilder) adapterView.getItemAtPosition(i);
                         Intent intent = new Intent(getContext(), DetailedIssue.class);
                         intent.putExtra("issueSelected", objectToSend);
+                        intent.putExtra("inputEnabled", false);
                         startActivity(intent);
                     }
                 });
-
             }
         }
-
         return inflate;
     }
 }
