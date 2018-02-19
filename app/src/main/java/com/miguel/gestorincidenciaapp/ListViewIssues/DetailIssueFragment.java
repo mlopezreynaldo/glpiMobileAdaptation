@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.miguel.gestorincidenciaapp.DetailedIssue.DetailedIssue;
 import com.miguel.gestorincidenciaapp.R;
 import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
@@ -28,6 +29,7 @@ public class DetailIssueFragment extends Fragment {
     private ArrayList<TicketJsonBuilder> items;
     private ArrayAdapter<TicketJsonBuilder> adapter;
     private ListView listView;
+    private FABRevealMenu fabMenu;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,5 +74,13 @@ public class DetailIssueFragment extends Fragment {
             }
         }
         return inflate;
+    }
+
+    public FABRevealMenu getFabMenu() {
+        return fabMenu;
+    }
+
+    public void setFabMenu(FABRevealMenu fabMenu) {
+        this.fabMenu = fabMenu;
     }
 }
