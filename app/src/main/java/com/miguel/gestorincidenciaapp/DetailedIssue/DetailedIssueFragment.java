@@ -2,21 +2,30 @@ package com.miguel.gestorincidenciaapp.DetailedIssue;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
+import com.hlab.fabrevealmenu.model.FABMenuItem;
+import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.miguel.gestorincidenciaapp.R;
 import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
+
+import java.util.ArrayList;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DetailedIssueFragment extends Fragment {
+public class DetailedIssueFragment extends Fragment  implements OnFABMenuSelectedListener{
 
     private TicketJsonBuilder object;
     private TextInputEditText title;
@@ -26,6 +35,7 @@ public class DetailedIssueFragment extends Fragment {
     private TextInputEditText priority;
     private TextInputEditText description;
     private boolean inputsEnabled;
+    private ArrayList<FABMenuItem> items;
 
 
     public DetailedIssueFragment() {
@@ -91,5 +101,37 @@ public class DetailedIssueFragment extends Fragment {
         }
 
         return inflate;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initItems(false);
+
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        final FABRevealMenu fabMenu = view.findViewById(R.id.fabMenu);
+
+        if(fab != null && fabMenu != null){
+
+        }
+    }
+
+    private void initItems(boolean b) {
+
+        items = new ArrayList<>();
+        items.add(new FABMenuItem("Attachments", AppCompatResources.getDrawable(getActivity(), R.drawable.drawable_bg_selected)));
+
+    }
+
+    @Override
+    public void onMenuItemSelected(View view, int id) {
+
+        if (id >= 0 && items != null && items.size() > id) {
+
+            Toast.makeText(getActivity(), items.get(id).getTitle() + "Clicked", Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 }

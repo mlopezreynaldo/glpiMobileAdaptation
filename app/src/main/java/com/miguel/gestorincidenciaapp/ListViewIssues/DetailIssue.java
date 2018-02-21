@@ -13,7 +13,7 @@ import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.miguel.gestorincidenciaapp.R;
 
-public class DetailIssue extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class DetailIssue extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,27 +23,6 @@ public class DetailIssue extends AppCompatActivity implements BottomNavigationVi
         setSupportActionBar(toolbar);
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        FABRevealMenu fabRevealMenu = findViewById(R.id.navigation);
-
-    }
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        int id = item.getItemId();
-        showXmlFragment();
-        return false;
-    }
-
-
-    private void showXmlFragment() {
-       getSupportFragmentManager().beginTransaction().replace(R.id.container, new DetailIssueFragment()).commit();
-   }
-
-    private void showCodeFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new DetailIssueFragment()).commit();
     }
 
 }
