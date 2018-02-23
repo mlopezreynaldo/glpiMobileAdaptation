@@ -12,11 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.hlab.fabrevealmenu.enums.Direction;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.model.FABMenuItem;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
+import com.miguel.gestorincidenciaapp.FabBaseFragment;
 import com.miguel.gestorincidenciaapp.R;
 import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
 
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DetailedIssueFragment extends Fragment  implements OnFABMenuSelectedListener{
+public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuSelectedListener{
 
     private TicketJsonBuilder object;
     private TextInputEditText title;
@@ -36,6 +39,7 @@ public class DetailedIssueFragment extends Fragment  implements OnFABMenuSelecte
     private TextInputEditText description;
     private boolean inputsEnabled;
     private ArrayList<FABMenuItem> items;
+    private Direction currentDirection = Direction.UP;
 
 
     public DetailedIssueFragment() {
@@ -114,14 +118,26 @@ public class DetailedIssueFragment extends Fragment  implements OnFABMenuSelecte
 
         if(fab != null && fabMenu != null){
 
+            setFabRevealMenu(fabMenu);
+
+            fabMenu.setMenuItems(items);
+
+            fabMenu.bindAnchorView(fab);
+
+            fabMenu.setMenuDirection(currentDirection);
+
+            fabMenu.setOnFABMenuSelectedListener(this);
+
         }
     }
+
 
     private void initItems(boolean b) {
 
         items = new ArrayList<>();
-        items.add(new FABMenuItem("Attachments", AppCompatResources.getDrawable(getActivity(), R.drawable.drawable_bg_selected)));
-
+        items.add(new FABMenuItem("Editar", AppCompatResources.getDrawable(getActivity(), R.drawable.ic_edit_black_24dp)));
+        items.add(new FABMenuItem("Enviar", AppCompatResources.getDrawable(getActivity(), R.drawable.ic_send_black_24dp)));
+        items.add(new FABMenuItem("Guardar", AppCompatResources.getDrawable(getActivity(), R.drawable.ic_save_black_24dp)));
     }
 
     @Override

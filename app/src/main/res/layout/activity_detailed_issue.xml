@@ -16,30 +16,4 @@
 
     <include layout="@layout/content_detailed_issue" />
 
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:menu="@menu/bottom_menu"
-        android:layout_gravity="bottom"/>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email"
-        app:backgroundTint="@color/colorAccent"
-        app:fabSize="normal"
-        app:layout_anchorGravity="bottom|end" />
-
-    <com.hlab.fabrevealmenu.view.FABRevealMenu
-        android:id="@+id/fabMenu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:menuDirection="down"
-        app:showOverlay="true" />
-
-
 </android.support.design.widget.CoordinatorLayout>

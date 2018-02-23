@@ -15,7 +15,7 @@ import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.miguel.gestorincidenciaapp.ListViewIssues.DetailIssueFragment;
 import com.miguel.gestorincidenciaapp.R;
 
-public class DetailedIssue extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class DetailedIssue extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,35 +24,5 @@ public class DetailedIssue extends AppCompatActivity implements BottomNavigation
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        FABRevealMenu fabRevealMenu = findViewById(R.id.navigation);
     }
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.nav_xml) {
-            showXmlFragment();
-            return true;
-        } else if (id == R.id.nav_code) {
-            showCodeFragment();
-            return true;
-        }
-
-        return false;
-    }
-
-
-    private void showXmlFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new DetailIssueFragment()).commit();
-    }
-
-    private void showCodeFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new DetailIssueFragment()).commit();
-    }
-
-
 }
