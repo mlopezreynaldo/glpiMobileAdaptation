@@ -1,4 +1,4 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.POJO;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -151,9 +151,27 @@ public class TicketJsonBuilder implements Serializable{
         this.impact = impact;
     }
 
+
     @Override
     public String toString() {
         return name;
+    }
+
+    public String toti() {
+        return "TicketJsonBuilder{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", status=" + status +
+                ", content='" + content + '\'' +
+                ", urgency=" + urgency +
+                ", priority=" + priority +
+                ", type=" + type +
+                ", solution='" + solution + '\'' +
+                ", closeDate='" + closeDate + '\'' +
+                ", solveDate='" + solveDate + '\'' +
+                ", impact=" + impact +
+                '}';
     }
 }
 

@@ -10,6 +10,17 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    repositories {
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+    android {
+        compileOptions {
+            sourceCompatibility 1.8
+            targetCompatibility 1.8
+        }
+    }
     buildTypes {
         release {
             postprocessing {
@@ -41,4 +52,5 @@ dependencies {
     implementation "android.arch.lifecycle:runtime:1.0.0-alpha9"
     implementation "android.arch.lifecycle:extensions:1.0.0-alpha9"
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha9"
+    implementation 'com.hlab.fabrevealmenu:fab-reveal-menu:1.0.3'
 }

@@ -1,4 +1,4 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.POJO;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

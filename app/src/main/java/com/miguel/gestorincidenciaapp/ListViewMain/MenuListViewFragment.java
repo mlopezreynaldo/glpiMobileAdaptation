@@ -1,4 +1,4 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.ListViewMain;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -12,8 +12,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.alexvasilkov.events.Events;
+import com.miguel.gestorincidenciaapp.ListViewIssues.DetailIssue;
+import com.miguel.gestorincidenciaapp.Methods.IssuesMethods;
+import com.miguel.gestorincidenciaapp.R;
+import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -98,6 +101,8 @@ public class MenuListViewFragment extends Fragment {
     private void onClosedIssues(ArrayList<TicketJsonBuilder> data){
 
         dataSendList = data;
+
+        Log.d("DATA GETTED",data.toString());
 
         int closedCont = 0;
         int openedCont = 0;

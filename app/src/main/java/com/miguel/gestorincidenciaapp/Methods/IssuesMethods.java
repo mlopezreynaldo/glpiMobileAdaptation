@@ -1,14 +1,13 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.Methods;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import com.alexvasilkov.events.Events;
+import com.miguel.gestorincidenciaapp.APInterface.GlpiClient;
+import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
+import com.miguel.gestorincidenciaapp.POJO.TokenInfo;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.ResponseBody;

@@ -1,4 +1,4 @@
-package com.miguel.gestorincidenciaapp;
+package com.miguel.gestorincidenciaapp.ListViewIssues;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -11,9 +11,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.lang.reflect.Array;
+import com.hlab.fabrevealmenu.view.FABRevealMenu;
+import com.miguel.gestorincidenciaapp.DetailedIssue.DetailedIssue;
+import com.miguel.gestorincidenciaapp.R;
+import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -26,6 +29,7 @@ public class DetailIssueFragment extends Fragment {
     private ArrayList<TicketJsonBuilder> items;
     private ArrayAdapter<TicketJsonBuilder> adapter;
     private ListView listView;
+    private FABRevealMenu fabMenu;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +47,9 @@ public class DetailIssueFragment extends Fragment {
             if(jsonBuilder != null){
 
                 items = jsonBuilder;
+
+                Log.d("DATA GETTED", jsonBuilder.toString());
+
                 items = new ArrayList<>(items);
 
                 adapter = new ArrayAdapter<>(
@@ -60,13 +67,20 @@ public class DetailIssueFragment extends Fragment {
                         TicketJsonBuilder objectToSend = (TicketJsonBuilder) adapterView.getItemAtPosition(i);
                         Intent intent = new Intent(getContext(), DetailedIssue.class);
                         intent.putExtra("issueSelected", objectToSend);
+                        intent.putExtra("inputEnabled", false);
                         startActivity(intent);
                     }
                 });
-
             }
         }
-
         return inflate;
+    }
+
+    public FABRevealMenu getFabMenu() {
+        return fabMenu;
+    }
+
+    public void setFabMenu(FABRevealMenu fabMenu) {
+        this.fabMenu = fabMenu;
     }
 }
