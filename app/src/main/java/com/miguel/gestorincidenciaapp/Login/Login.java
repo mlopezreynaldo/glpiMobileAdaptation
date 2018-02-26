@@ -166,8 +166,6 @@ public class Login extends AppCompatActivity {
 
         private boolean isPhoneValid(EditText auxPhone) {
 
-            Log.d("PHON LOG","Boolean check");
-
             if(!Patterns.PHONE.matcher(auxPhone.getText().toString()).matches()){
 
                 auxPhone.setError("Format del telefon no valid");

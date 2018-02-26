@@ -79,7 +79,7 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
                 date.setFocusable(false);
                 date.setBackgroundColor(Color.TRANSPARENT);
 
-                status.setText(String.valueOf(object.getStatus()));
+                status.setText(statusConverter(object.getStatus()));
                 status.setFocusable(false);
                 status.setBackgroundColor(Color.TRANSPARENT);
 
@@ -95,8 +95,6 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
                 description.setText(object.getContent());
                 description.setFocusable(false);
                 description.setBackgroundColor(Color.TRANSPARENT);
-
-                Log.d("DATA GETTED",object.toti());
             }
         }
         return inflate;
@@ -127,6 +125,39 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
     }
 
 
+    private String statusConverter(int status){
+
+
+        switch (status){
+            case 1:
+
+                return "Nueva";
+
+            case 2:
+
+                return "En Curso (Asignada)";
+
+            case 3:
+
+                return "En Curso (Planificada)";
+
+            case 4:
+
+                return "En Espera";
+
+            case 5:
+
+                return "Resuleto";
+
+            case 6:
+
+                return "Cerrado";
+
+                default:
+                    return "ERROR";
+        }
+    }
+
     private void initItems(boolean b) {
 
         items = new ArrayList<>();
@@ -145,12 +176,11 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
             switch (items.get(id).getTitle()){
                 case "Editar":
 
-                    title.setFocusable(true);
-                    date.setFocusable(true);
-                    status.setFocusable(true);
-                    urgency.setFocusable(true);
-                    priority.setFocusable(true);
-                    description.setFocusable(true);
+                    title.setFocusableInTouchMode(true);
+                    status.setFocusableInTouchMode(true);
+                    urgency.setFocusableInTouchMode(true);
+                    priority.setFocusableInTouchMode(true);
+                    description.setFocusableInTouchMode(true);
 
                     break;
 
