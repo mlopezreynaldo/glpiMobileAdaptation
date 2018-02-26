@@ -1,5 +1,6 @@
 package com.miguel.gestorincidenciaapp.DetailedIssue;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
@@ -12,9 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.alexvasilkov.events.Events;
 import com.hlab.fabrevealmenu.enums.Direction;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.model.FABMenuItem;
@@ -48,7 +51,7 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_detailed_issue, container, false);
+        View inflate = inflater.inflate(R.layout.fragment_detailed_issue, container, true);
 
         title = inflate.findViewById(R.id.txtTitleIssue);
         date = inflate.findViewById(R.id.dateIssue);
@@ -67,8 +70,6 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
             if(!inputsEnabled){
 
                 object = (TicketJsonBuilder) i.getSerializableExtra("issueSelected");
-
-                Log.d("DATA GETTED",object.toti());
 
                 title.setText(object.getName());
                 title.setFocusable(false);
@@ -96,14 +97,8 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
                 description.setBackgroundColor(Color.TRANSPARENT);
 
                 Log.d("DATA GETTED",object.toti());
-
-            } else {
-
-
-
             }
         }
-
         return inflate;
     }
 
@@ -146,6 +141,31 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
         if (id >= 0 && items != null && items.size() > id) {
 
             Toast.makeText(getActivity(), items.get(id).getTitle() + "Clicked", Toast.LENGTH_SHORT).show();
+
+            switch (items.get(id).getTitle()){
+                case "Editar":
+
+                    title.setFocusable(true);
+                    date.setFocusable(true);
+                    status.setFocusable(true);
+                    urgency.setFocusable(true);
+                    priority.setFocusable(true);
+                    description.setFocusable(true);
+
+                    break;
+
+                case  "Enviar":
+
+                    System.out.println("Enviando");
+
+                    break;
+
+                case "Guardar":
+
+                    System.out.println("Guardando");
+
+                    break;
+            }
 
         }
 

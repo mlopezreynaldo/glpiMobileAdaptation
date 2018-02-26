@@ -130,9 +130,11 @@ public class Login extends AppCompatActivity {
 
                                 calls.login(usernameGet,passwordGet);
 
-                                Intent menuApp = new Intent(getContext(),MenuListView.class);
-                                menuApp.putExtra("session_token", calls.getSessionToken());
-                                startActivity(menuApp);
+                                if(calls.getSessionToken() != null) {
+                                    Intent menuApp = new Intent(getContext(), MenuListView.class);
+                                    menuApp.putExtra("session_token", calls.getSessionToken());
+                                    startActivity(menuApp);
+                                }
 
                             }
                         }
