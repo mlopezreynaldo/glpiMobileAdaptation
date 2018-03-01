@@ -14,7 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.alexvasilkov.events.Events;
@@ -40,6 +43,7 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
     private TextInputEditText urgency;
     private TextInputEditText priority;
     private TextInputEditText description;
+    private Spinner statusSpiner;
     private boolean inputsEnabled;
     private ArrayList<FABMenuItem> items;
     private Direction currentDirection = Direction.UP;
@@ -59,6 +63,7 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
         urgency = inflate.findViewById(R.id.txtUrgency);
         priority = inflate.findViewById(R.id.txtPriority);
         description = inflate.findViewById(R.id.description);
+        statusSpiner = inflate.findViewById(R.id.spn_Status);
 
         Intent i = getActivity().getIntent();
         inputsEnabled = (boolean) i.getSerializableExtra("inputEnabled");
@@ -70,6 +75,10 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
             if(!inputsEnabled){
 
                 object = (TicketJsonBuilder) i.getSerializableExtra("issueSelected");
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),R.array.status_labels, R.layout.support_simple_spinner_dropdown_item);
+                adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                statusSpiner.setAdapter(adapter);
+
 
                 title.setText(object.getName());
                 title.setFocusable(false);
@@ -82,6 +91,9 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
                 status.setText(statusConverter(object.getStatus()));
                 status.setFocusable(false);
                 status.setBackgroundColor(Color.TRANSPARENT);
+                statusSpiner.setSelection(object.getStatus());
+                statusSpiner.setEnabled(false);
+                statusSpiner.setBackgroundColor(Color.TRANSPARENT);
 
                 urgency.setText(String.valueOf(object.getUrgency()));
                 urgency.setFocusable(false);
@@ -177,7 +189,14 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
                 case "Editar":
 
                     title.setFocusableInTouchMode(true);
+                    title.requestFocus();
+                    final InputMethodManager inputMethodManager = (InputMethodManager) getContext()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.showSoftInput(title, InputMethodManager.SHOW_IMPLICIT);
+                    title.setSelection(title.getText().length());
+
                     status.setFocusableInTouchMode(true);
+                    statusSpiner.setFocusableInTouchMode(true);
                     urgency.setFocusableInTouchMode(true);
                     priority.setFocusableInTouchMode(true);
                     description.setFocusableInTouchMode(true);
@@ -196,8 +215,6 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
 
                     break;
             }
-
         }
-
     }
 }

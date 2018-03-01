@@ -131,6 +131,17 @@
         app:layout_constraintGuide_percent="0.96" />
 
 
+    <Spinner
+        android:id="@+id/spn_Status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="61dp"
@@ -152,7 +163,9 @@
         android:layout_centerInParent="true"
         app:menuBackgroundColor="@color/colorAccent"
         app:menuTitleTextColor="@color/colorWhite"
-        app:showTitle="true" />
+        app:showTitle="true" >
+
+    </com.hlab.fabrevealmenu.view.FABRevealMenu>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline5"

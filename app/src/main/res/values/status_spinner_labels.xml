@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="status_labels">
+        <item>Cerrado</item>
+        <item>Nueva</item>
+        <item>En Curso (Asignada)</item>
+        <item>En Curso (Planificada)</item>
+        <item>En Espera</item>
+        <item>Resuleto</item>
+        <item>Cerrado</item>
+    </string-array>
+
+
+</resources>
