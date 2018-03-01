@@ -39,7 +39,6 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
     private TicketJsonBuilder object;
     private TextInputEditText title;
     private TextInputEditText date;
-    private TextInputEditText status;
     private TextInputEditText urgency;
     private TextInputEditText priority;
     private TextInputEditText description;
@@ -59,7 +58,6 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
 
         title = inflate.findViewById(R.id.txtTitleIssue);
         date = inflate.findViewById(R.id.dateIssue);
-        status = inflate.findViewById(R.id.status);
         urgency = inflate.findViewById(R.id.txtUrgency);
         priority = inflate.findViewById(R.id.txtPriority);
         description = inflate.findViewById(R.id.description);
@@ -68,45 +66,49 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
         Intent i = getActivity().getIntent();
         inputsEnabled = (boolean) i.getSerializableExtra("inputEnabled");
 
-
-        if(i != null) {
-
-
-            if(!inputsEnabled){
-
-                object = (TicketJsonBuilder) i.getSerializableExtra("issueSelected");
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),R.array.status_labels, R.layout.support_simple_spinner_dropdown_item);
-                adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-                statusSpiner.setAdapter(adapter);
+        Log.d("INPUT","" + inputsEnabled);
+        if(inputsEnabled){
 
 
-                title.setText(object.getName());
-                title.setFocusable(false);
-                title.setBackgroundColor(Color.TRANSPARENT);
 
-                date.setText(object.getDate());
-                date.setFocusable(false);
-                date.setBackgroundColor(Color.TRANSPARENT);
+        } else {
 
-                status.setText(statusConverter(object.getStatus()));
-                status.setFocusable(false);
-                status.setBackgroundColor(Color.TRANSPARENT);
-                statusSpiner.setSelection(object.getStatus());
-                statusSpiner.setEnabled(false);
-                statusSpiner.setBackgroundColor(Color.TRANSPARENT);
-
-                urgency.setText(String.valueOf(object.getUrgency()));
-                urgency.setFocusable(false);
-                urgency.setBackgroundColor(Color.TRANSPARENT);
-
-                priority.setText(String.valueOf(object.getPriority()));
-                priority.setFocusable(false);
-                priority.setBackgroundColor(Color.TRANSPARENT);
+            if (i != null) {
 
 
-                description.setText(object.getContent());
-                description.setFocusable(false);
-                description.setBackgroundColor(Color.TRANSPARENT);
+                if (!inputsEnabled) {
+
+                    object = (TicketJsonBuilder) i.getSerializableExtra("issueSelected");
+                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.status_labels, R.layout.support_simple_spinner_dropdown_item);
+                    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                    statusSpiner.setAdapter(adapter);
+
+
+                    title.setText(object.getName());
+                    title.setFocusable(false);
+                    title.setBackgroundColor(Color.TRANSPARENT);
+
+                    date.setText(object.getDate());
+                    date.setFocusable(false);
+                    date.setBackgroundColor(Color.TRANSPARENT);
+
+                    statusSpiner.setSelection(object.getStatus());
+                    statusSpiner.setEnabled(false);
+                    statusSpiner.setBackgroundColor(Color.TRANSPARENT);
+
+                    urgency.setText(String.valueOf(object.getUrgency()));
+                    urgency.setFocusable(false);
+                    urgency.setBackgroundColor(Color.TRANSPARENT);
+
+                    priority.setText(String.valueOf(object.getPriority()));
+                    priority.setFocusable(false);
+                    priority.setBackgroundColor(Color.TRANSPARENT);
+
+
+                    description.setText(object.getContent());
+                    description.setFocusable(false);
+                    description.setBackgroundColor(Color.TRANSPARENT);
+                }
             }
         }
         return inflate;
@@ -137,39 +139,6 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
     }
 
 
-    private String statusConverter(int status){
-
-
-        switch (status){
-            case 1:
-
-                return "Nueva";
-
-            case 2:
-
-                return "En Curso (Asignada)";
-
-            case 3:
-
-                return "En Curso (Planificada)";
-
-            case 4:
-
-                return "En Espera";
-
-            case 5:
-
-                return "Resuleto";
-
-            case 6:
-
-                return "Cerrado";
-
-                default:
-                    return "ERROR";
-        }
-    }
-
     private void initItems(boolean b) {
 
         items = new ArrayList<>();
@@ -195,8 +164,7 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
                     inputMethodManager.showSoftInput(title, InputMethodManager.SHOW_IMPLICIT);
                     title.setSelection(title.getText().length());
 
-                    status.setFocusableInTouchMode(true);
-                    statusSpiner.setFocusableInTouchMode(true);
+                    statusSpiner.setEnabled(true);
                     urgency.setFocusableInTouchMode(true);
                     priority.setFocusableInTouchMode(true);
                     description.setFocusableInTouchMode(true);
