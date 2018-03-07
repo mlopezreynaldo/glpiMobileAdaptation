@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="urgency_label">
+        <item>Muy Alta</item>
+        <item>Alta</item>
+        <item>Media</item>
+        <item>Baja</item>
+        <item>Muy Baja</item>
+    </string-array>
+
+</resources>

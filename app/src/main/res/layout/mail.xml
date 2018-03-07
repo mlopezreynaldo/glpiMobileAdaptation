@@ -30,7 +30,8 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:focusedByDefault="false" />
 
     <EditText
         android:id="@+id/edTxt_mail"
@@ -42,7 +43,8 @@
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/edTxT_passw"
         app:layout_constraintEnd_toEndOf="@+id/edTxT_passw"
-        app:layout_constraintStart_toStartOf="@+id/edTxT_passw" />
+        app:layout_constraintStart_toStartOf="@+id/edTxT_passw"
+        android:focusedByDefault="false"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"
@@ -50,5 +52,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
+
+    <ProgressBar
+        android:id="@+id/pgBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:indeterminate="false"
+        android:max="100"
+        android:minHeight="100dp"
+        android:progress="2"
+        android:progressBackgroundTint="@color/colorPrimaryDark" />
 
 </android.support.constraint.ConstraintLayout>

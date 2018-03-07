@@ -1,6 +1,7 @@
 package com.miguel.gestorincidenciaapp.Login;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -20,11 +21,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.miguel.gestorincidenciaapp.APInterface.GlpiClient;
 import com.miguel.gestorincidenciaapp.ListViewMain.MenuListView;
 import com.miguel.gestorincidenciaapp.Methods.LoginMethods;
+import com.miguel.gestorincidenciaapp.POJO.TokenInfo;
 import com.miguel.gestorincidenciaapp.R;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -33,7 +42,9 @@ public class Login extends AppCompatActivity {
     private static String usernameGet;
     private static String passwordGet;
     private static String phoneGet;
-    
+    private static final String apptoken = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
+    private static GlpiClient glpi;
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
@@ -119,8 +130,11 @@ public class Login extends AppCompatActivity {
                     Button btnLogin = rootView.findViewById(R.id.btnLogin);
                     final EditText mail = rootView.findViewById(R.id.edTxt_mail);
                     final EditText editPassword = rootView.findViewById(R.id.edTxT_passw);
+                    ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.pgBar);
+                    progressBar.setVisibility(View.GONE);
 
                     btnLogin.setOnClickListener(new View.OnClickListener() {
+
                         @Override
                         public void onClick(View view) {
 
@@ -128,12 +142,40 @@ public class Login extends AppCompatActivity {
                                 usernameGet = mail.getText().toString();
                                 passwordGet = editPassword.getText().toString();
 
-                                calls.login(usernameGet,passwordGet);
+                                progressBar.setVisibility(View.VISIBLE);
 
-                                Intent menuApp = new Intent(getContext(),MenuListView.class);
-                                menuApp.putExtra("session_token", calls.getSessionToken());
-                                startActivity(menuApp);
+                                glpi = retrofit.create(GlpiClient.class);
 
+                                Call<TokenInfo> call = glpi.initSession(usernameGet, passwordGet, apptoken);
+                                call.enqueue(new Callback<TokenInfo>() {
+
+                                    @Override
+                                    public void onResponse(Call<TokenInfo> call, Response<TokenInfo> response) {
+
+                                        if(response.isSuccessful()) {
+
+                                            Intent menuApp = new Intent(getContext(), MenuListView.class);
+                                            menuApp.putExtra("session_token", response.body().getSessionToken());
+                                            startActivity(menuApp);
+
+                                        } else {
+                                            ResponseBody body = response.errorBody();
+
+                                            Log.d("ERROR_LOGIN", body.toString());
+                                            Toast.makeText(getContext(),"Usuari / Contasenya erronis",Toast.LENGTH_LONG).show();
+                                            editPassword.setText("");
+                                            editPassword.clearFocus();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<TokenInfo> call, Throwable t) {
+
+                                        Toast.makeText(getContext(),"ERROR GENERAL",Toast.LENGTH_LONG).show();
+
+                                    }
+
+                                });
                             }
                         }
                     });
@@ -163,8 +205,6 @@ public class Login extends AppCompatActivity {
         }
 
         private boolean isPhoneValid(EditText auxPhone) {
-
-            Log.d("PHON LOG","Boolean check");
 
             if(!Patterns.PHONE.matcher(auxPhone.getText().toString()).matches()){
 
