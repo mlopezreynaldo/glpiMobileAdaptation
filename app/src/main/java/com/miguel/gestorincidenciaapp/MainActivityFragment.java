@@ -104,6 +104,7 @@ public class MainActivityFragment extends Fragment {
             public void onClick(View view) {
                 Intent in = new Intent(getContext(),Login.class);
                 startActivity(in);
+                getActivity().finish();
             }
         });
 

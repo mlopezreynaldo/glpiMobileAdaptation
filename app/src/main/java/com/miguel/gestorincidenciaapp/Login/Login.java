@@ -1,6 +1,7 @@
 package com.miguel.gestorincidenciaapp.Login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 
@@ -154,9 +155,15 @@ public class Login extends AppCompatActivity {
 
                                         if(response.isSuccessful()) {
 
+                                            SharedPreferences sh = getActivity().getPreferences(getContext().MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sh.edit();
+                                            editor.putString("session_token_shared",response.body().getSessionToken());
+                                            editor.commit();
+
                                             Intent menuApp = new Intent(getContext(), MenuListView.class);
                                             menuApp.putExtra("session_token", response.body().getSessionToken());
                                             startActivity(menuApp);
+                                            getActivity().finish();
 
                                         } else {
                                             ResponseBody body = response.errorBody();
@@ -167,14 +174,10 @@ public class Login extends AppCompatActivity {
                                             editPassword.clearFocus();
                                         }
                                     }
-
                                     @Override
                                     public void onFailure(Call<TokenInfo> call, Throwable t) {
-
                                         Toast.makeText(getContext(),"ERROR GENERAL",Toast.LENGTH_LONG).show();
-
                                     }
-
                                 });
                             }
                         }
