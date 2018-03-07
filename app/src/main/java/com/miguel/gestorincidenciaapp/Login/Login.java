@@ -1,6 +1,7 @@
 package com.miguel.gestorincidenciaapp.Login;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.miguel.gestorincidenciaapp.APInterface.GlpiClient;
@@ -42,7 +44,7 @@ public class Login extends AppCompatActivity {
     private static String phoneGet;
     private static final String apptoken = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
     private static GlpiClient glpi;
-    
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
@@ -128,6 +130,8 @@ public class Login extends AppCompatActivity {
                     Button btnLogin = rootView.findViewById(R.id.btnLogin);
                     final EditText mail = rootView.findViewById(R.id.edTxt_mail);
                     final EditText editPassword = rootView.findViewById(R.id.edTxT_passw);
+                    ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.pgBar);
+                    progressBar.setVisibility(View.GONE);
 
                     btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -138,7 +142,10 @@ public class Login extends AppCompatActivity {
                                 usernameGet = mail.getText().toString();
                                 passwordGet = editPassword.getText().toString();
 
+                                progressBar.setVisibility(View.VISIBLE);
+
                                 glpi = retrofit.create(GlpiClient.class);
+
                                 Call<TokenInfo> call = glpi.initSession(usernameGet, passwordGet, apptoken);
                                 call.enqueue(new Callback<TokenInfo>() {
 
@@ -148,17 +155,16 @@ public class Login extends AppCompatActivity {
                                         if(response.isSuccessful()) {
 
                                             Intent menuApp = new Intent(getContext(), MenuListView.class);
-                                            menuApp.putExtra("session_token", calls.getSessionToken());
+                                            menuApp.putExtra("session_token", response.body().getSessionToken());
                                             startActivity(menuApp);
 
-
                                         } else {
-
                                             ResponseBody body = response.errorBody();
-                                            
+
                                             Log.d("ERROR_LOGIN", body.toString());
                                             Toast.makeText(getContext(),"Usuari / Contasenya erronis",Toast.LENGTH_LONG).show();
                                             editPassword.setText("");
+                                            editPassword.clearFocus();
                                         }
                                     }
 

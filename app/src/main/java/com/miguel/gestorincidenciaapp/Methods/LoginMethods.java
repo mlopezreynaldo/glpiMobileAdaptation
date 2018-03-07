@@ -16,7 +16,7 @@ public class LoginMethods {
     private Retrofit retrofit;
     private GlpiClient glpi;
     private TokenInfo data;
-    private String sessionToken = "s8fp7lrsir84k81om79uvddqi7";
+    private String sessionToken = "";
     private Context context;
 
     public LoginMethods(Retrofit retrofit, Context context) {
