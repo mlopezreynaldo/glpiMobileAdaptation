@@ -38,6 +38,8 @@ public class MenuListViewFragment extends Fragment {
 
     public MenuListViewFragment() {}
 
+
+
     @Override
     public void onStart() {
         super.onStart();
@@ -79,11 +81,13 @@ public class MenuListViewFragment extends Fragment {
         );
 
         menu.setAdapter(adapter);
+
         menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 String jsonBuilder = (String) adapterView.getItemAtPosition(i);
+                Log.d("ARRAY","" + i);
                 Intent intent = new Intent(getContext(), DetailIssue.class);
                 intent.putExtra("issues", dataSendList);
                 startActivity(intent);
@@ -102,6 +106,10 @@ public class MenuListViewFragment extends Fragment {
 
         dataSendList = data;
 
+        ArrayList<TicketJsonBuilder> closedArray = new ArrayList<>();
+        ArrayList<TicketJsonBuilder> openedArray = new ArrayList<>();
+        ArrayList<TicketJsonBuilder> pendingArray = new ArrayList<>();
+
         int closedCont = 0;
         int openedCont = 0;
         int pendingCont = 0;
@@ -109,13 +117,22 @@ public class MenuListViewFragment extends Fragment {
         for (TicketJsonBuilder closed : data) {
 
             if(closed.getStatus() == 6){
+
+                closedArray.add(closed);
                 closedCont++;
             }
 
             if(closed.getStatus() == 2){
+
+                openedArray.add(closed);
                 openedCont++;
             }
 
+            if (closed.getStatus() == 0){
+
+                pendingArray.add(closed);
+                pendingCont++;
+            }
         }
 
 
@@ -135,6 +152,34 @@ public class MenuListViewFragment extends Fragment {
         );
 
         menu.setAdapter(adapter);
+
+        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getContext(), DetailIssue.class);
+
+                switch (i){
+                    case 0:
+
+                        intent.putExtra("issues", openedArray);
+                        startActivity(intent);
+
+                        break;
+                    case 1:
+                        intent.putExtra("issues", closedArray);
+                        startActivity(intent);
+
+                        break;
+                    case 3:
+
+                        intent.putExtra("issues", pendingArray);
+                        startActivity(intent);
+
+                        break;
+                }
+            }
+        });
 
     }
 
