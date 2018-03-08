@@ -144,6 +144,8 @@ public class Login extends AppCompatActivity {
                                 passwordGet = editPassword.getText().toString();
 
                                 progressBar.setVisibility(View.VISIBLE);
+                                mail.setEnabled(false);
+                                editPassword.setEnabled(false);
 
                                 glpi = retrofit.create(GlpiClient.class);
 
@@ -162,6 +164,8 @@ public class Login extends AppCompatActivity {
 
                                             Intent menuApp = new Intent(getContext(), MenuListView.class);
                                             menuApp.putExtra("session_token", response.body().getSessionToken());
+
+                                            progressBar.setVisibility(View.GONE);
                                             startActivity(menuApp);
                                             getActivity().finish();
 
@@ -172,6 +176,11 @@ public class Login extends AppCompatActivity {
                                             Toast.makeText(getContext(),"Usuari / Contasenya erronis",Toast.LENGTH_LONG).show();
                                             editPassword.setText("");
                                             editPassword.clearFocus();
+
+                                            progressBar.setVisibility(View.GONE);
+
+                                            mail.setEnabled(true);
+                                            editPassword.setEnabled(true);
                                         }
                                     }
                                     @Override
