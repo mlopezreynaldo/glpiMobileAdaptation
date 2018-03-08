@@ -201,10 +201,7 @@ public class MainActivityFragment extends Fragment {
                 } else {
 
                     ResponseBody body = response.errorBody();
-                    Log.d("ERROR", body.toString());
-
                     try {
-
                         Toast.makeText(getContext(), "ERROR" + body.string(), Toast.LENGTH_LONG).show();
 
                     } catch (IOException e) {
@@ -247,7 +244,6 @@ public class MainActivityFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-
                 sessionToken = sessionToken1;
 
             }
@@ -277,22 +273,14 @@ public class MainActivityFragment extends Fragment {
 
                     getClosedIssues(dataTicket);
 
-
-                    Log.d("PENEEEEEEEE", "  " + dataTicket.size());
-                    Log.d("PENEEEEEEEE", "  " + dataTicket.toString());
                     Toast.makeText(getContext(), "DATA" + dataTicket.toString(), Toast.LENGTH_LONG).show();
-
                 } else {
 
                     Toast.makeText(getContext(), "ERROR" + response.toString(), Toast.LENGTH_LONG).show();
-                    Log.d("RETROFIT", response.errorBody().toString());
-
                 }
             }
-
             @Override
             public void onFailure(Call<List<TicketJsonBuilder>> call, Throwable t) {
-
             }
         });
 
@@ -303,11 +291,7 @@ public class MainActivityFragment extends Fragment {
         for (TicketJsonBuilder json : dataClosed) {
 
             if(json.getStatus() == 6 ){
-
-                Log.d("DEBUG DEBUG", "  " + json.getName());
-                Log.d("DEBUG DEBUG", "  " + json.getId());
                 closedIssues++;
-                Log.d("DEBUG DEBUG", "  " + closedIssues);
             }
 
         }

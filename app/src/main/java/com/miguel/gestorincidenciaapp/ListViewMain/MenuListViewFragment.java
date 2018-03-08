@@ -157,15 +157,27 @@ public class MenuListViewFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                String jsonBuilder = (String) adapterView.getItemAtPosition(i);
-                if (i == 1){
-
-                }
                 Intent intent = new Intent(getContext(), DetailIssue.class);
-                intent.putExtra("issues", dataSendList);
-                startActivity(intent);
 
+                switch (i){
+                    case 0:
+
+                        intent.putExtra("issues", openedArray);
+                        startActivity(intent);
+
+                        break;
+                    case 1:
+                        intent.putExtra("issues", closedArray);
+                        startActivity(intent);
+
+                        break;
+                    case 3:
+
+                        intent.putExtra("issues", pendingArray);
+                        startActivity(intent);
+
+                        break;
+                }
             }
         });
 
