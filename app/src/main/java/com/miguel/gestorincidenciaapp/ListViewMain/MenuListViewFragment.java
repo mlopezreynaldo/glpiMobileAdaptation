@@ -38,8 +38,6 @@ public class MenuListViewFragment extends Fragment {
 
     public MenuListViewFragment() {}
 
-
-
     @Override
     public void onStart() {
         super.onStart();
@@ -86,8 +84,6 @@ public class MenuListViewFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                String jsonBuilder = (String) adapterView.getItemAtPosition(i);
-                Log.d("ARRAY","" + i);
                 Intent intent = new Intent(getContext(), DetailIssue.class);
                 intent.putExtra("issues", dataSendList);
                 startActivity(intent);
