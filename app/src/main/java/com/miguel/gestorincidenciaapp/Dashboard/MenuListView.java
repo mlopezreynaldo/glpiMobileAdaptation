@@ -1,13 +1,8 @@
-package com.miguel.gestorincidenciaapp.ListViewMain;
+package com.miguel.gestorincidenciaapp.Dashboard;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.miguel.gestorincidenciaapp.R;
 

@@ -30,7 +30,11 @@ android {
                 optimizeCode false
                 proguardFile 'proguard-rules.pro'
             }
+            dataBinding {
+                enabled = true
+            }
         }
+
     }
     productFlavors {
     }

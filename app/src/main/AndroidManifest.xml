@@ -26,7 +26,7 @@
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ListViewMain.MenuListView"
+            android:name=".Dashboard.MenuListView"
             android:label="@string/title_activity_menu_list_view"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

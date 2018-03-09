@@ -1,9 +1,8 @@
-package com.miguel.gestorincidenciaapp.ListViewMain;
+package com.miguel.gestorincidenciaapp.Dashboard;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +36,7 @@ public class MenuListViewFragment extends Fragment {
     private ListView menu;
 
     public MenuListViewFragment() {}
+
 
     @Override
     public void onStart() {
@@ -130,7 +130,6 @@ public class MenuListViewFragment extends Fragment {
                 pendingCont++;
             }
         }
-
 
         String[] dataS = {
                 "Incidencies Obertes    "  + openedCont,
