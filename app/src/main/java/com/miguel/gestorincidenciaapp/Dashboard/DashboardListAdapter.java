@@ -15,6 +15,8 @@ public class DashboardListAdapter extends ArrayAdapter<String>{
         super(context, resource, objects);
     }
 
+    
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
