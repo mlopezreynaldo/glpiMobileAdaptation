@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miguel.gestorincidenciaapp.APInterface.GlpiClient;
@@ -130,8 +131,9 @@ public class Login extends AppCompatActivity {
                     Button btnLogin = rootView.findViewById(R.id.btnLogin);
                     final EditText mail = rootView.findViewById(R.id.edTxt_mail);
                     final EditText editPassword = rootView.findViewById(R.id.edTxT_passw);
-                    ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.pgBar);
+                    ProgressBar progressBar = rootView.findViewById(R.id.pgBar);
                     progressBar.setVisibility(View.GONE);
+                    TextView onEstem = view.findViewById(R.id.txt_onEstem);
 
                     btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -190,6 +192,7 @@ public class Login extends AppCompatActivity {
                             }
                         }
                     });
+
 
                     break;
 

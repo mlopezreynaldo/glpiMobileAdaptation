@@ -7,4 +7,6 @@
     <string name="title_activity_menu_list_view">MenuListView</string>
     <string name="title_activity_detail_issue">DetailIssue</string>
     <string name="title_activity_detailed_issue">DetailedIssue</string>
+    <string name="title_activity_location">Location</string>
+    <string name="title_activity_add_issue_media">AddIssueMedia</string>
 </resources>
