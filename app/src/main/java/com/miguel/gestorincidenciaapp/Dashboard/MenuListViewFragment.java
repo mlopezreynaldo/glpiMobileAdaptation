@@ -1,9 +1,11 @@
-package com.miguel.gestorincidenciaapp.ListViewMain;
+package com.miguel.gestorincidenciaapp.Dashboard;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.alexvasilkov.events.Events;
+import com.miguel.gestorincidenciaapp.AddIssueMedia.AddIssueWithFoto;
 import com.miguel.gestorincidenciaapp.ListViewIssues.DetailIssue;
 import com.miguel.gestorincidenciaapp.Methods.IssuesMethods;
 import com.miguel.gestorincidenciaapp.R;
@@ -39,7 +42,6 @@ public class MenuListViewFragment extends Fragment {
     public MenuListViewFragment() {}
 
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -51,6 +53,39 @@ public class MenuListViewFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_list_view, container, false);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_addIssue);
+        fab.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                builder1.setMessage("Com vols obrir la incicencia");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Formulari",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent formulari = new Intent(getContext(), DetailIssue.class);
+                                startActivity(formulari);
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "Codi QR",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Intent qr = new Intent(getContext(), AddIssueWithFoto.class);
+                                startActivity(qr);
+
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            }
+        });
 
         Intent getSession = getActivity().getIntent();
         session_token = (String) getSession.getSerializableExtra("session_token");
@@ -86,8 +121,6 @@ public class MenuListViewFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                String jsonBuilder = (String) adapterView.getItemAtPosition(i);
-                Log.d("ARRAY","" + i);
                 Intent intent = new Intent(getContext(), DetailIssue.class);
                 intent.putExtra("issues", dataSendList);
                 startActivity(intent);
@@ -134,7 +167,6 @@ public class MenuListViewFragment extends Fragment {
                 pendingCont++;
             }
         }
-
 
         String[] dataS = {
                 "Incidencies Obertes    "  + openedCont,

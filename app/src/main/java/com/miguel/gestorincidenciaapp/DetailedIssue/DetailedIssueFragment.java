@@ -39,8 +39,8 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
     private TicketJsonBuilder object;
     private TextInputEditText title;
     private TextInputEditText date;
-    private TextInputEditText urgency;
-    private TextInputEditText priority;
+    private Spinner urgency;
+    private Spinner priority;
     private TextInputEditText description;
     private Spinner statusSpiner;
     private boolean inputsEnabled;
@@ -70,19 +70,23 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
         if(inputsEnabled){
 
 
-
         } else {
-
             if (i != null) {
-
-
                 if (!inputsEnabled) {
 
                     object = (TicketJsonBuilder) i.getSerializableExtra("issueSelected");
+
                     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.status_labels, R.layout.support_simple_spinner_dropdown_item);
                     adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                     statusSpiner.setAdapter(adapter);
 
+                    ArrayAdapter<CharSequence> urgencyAD = ArrayAdapter.createFromResource(getActivity(), R.array.urgency_label, R.layout.support_simple_spinner_dropdown_item);
+                    urgencyAD.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                    urgency.setAdapter(urgencyAD);
+
+                    ArrayAdapter<CharSequence> priorityAD = ArrayAdapter.createFromResource(getActivity(), R.array.priority_label, R.layout.support_simple_spinner_dropdown_item);
+                    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                    priority.setAdapter(priorityAD);
 
                     title.setText(object.getName());
                     title.setFocusable(false);
@@ -93,15 +97,16 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
                     date.setBackgroundColor(Color.TRANSPARENT);
 
                     statusSpiner.setSelection(object.getStatus());
+                    statusSpiner.setPrompt("Estado");
                     statusSpiner.setEnabled(false);
                     statusSpiner.setBackgroundColor(Color.TRANSPARENT);
 
-                    urgency.setText(String.valueOf(object.getUrgency()));
-                    urgency.setFocusable(false);
+                    urgency.setSelection(object.getUrgency());
+                    urgency.setEnabled(false);
                     urgency.setBackgroundColor(Color.TRANSPARENT);
 
-                    priority.setText(String.valueOf(object.getPriority()));
-                    priority.setFocusable(false);
+                    priority.setSelection(object.getPriority());
+                    priority.setEnabled(false);
                     priority.setBackgroundColor(Color.TRANSPARENT);
 
 
@@ -165,8 +170,8 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
                     title.setSelection(title.getText().length());
 
                     statusSpiner.setEnabled(true);
-                    urgency.setFocusableInTouchMode(true);
-                    priority.setFocusableInTouchMode(true);
+                    urgency.setEnabled(true);
+                    priority.setEnabled(true);
                     description.setFocusableInTouchMode(true);
 
                     break;

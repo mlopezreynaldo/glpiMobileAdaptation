@@ -52,10 +52,9 @@ public class DetailIssueFragment extends Fragment {
 
                 items = new ArrayList<>(items);
 
-                adapter = new ArrayAdapter<>(
+                adapter = new DetailsIssuesAdapter(
                         getContext(),
                         R.layout.details_app_layout,
-                        R.id.titleIssues,
                         items
                 );
 

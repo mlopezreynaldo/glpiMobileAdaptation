@@ -4,8 +4,8 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.miguel.gestorincidenciaapp"
-        minSdkVersion 23
-        targetSdkVersion 26
+        minSdkVersion 21
+        targetSdkVersion 16
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -30,7 +30,11 @@ android {
                 optimizeCode false
                 proguardFile 'proguard-rules.pro'
             }
+            dataBinding {
+                enabled = true
+            }
         }
+
     }
     productFlavors {
     }

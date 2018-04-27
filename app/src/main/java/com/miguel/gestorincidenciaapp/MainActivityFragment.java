@@ -54,7 +54,7 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.list_item_pagination_text);
+        ListView listView = view.findViewById(R.id.list_item_pagination_text);
 
         Retrofit.Builder builder = new Retrofit
                 .Builder()
