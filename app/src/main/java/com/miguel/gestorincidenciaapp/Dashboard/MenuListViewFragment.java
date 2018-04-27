@@ -15,7 +15,7 @@ import android.widget.ListView;
 
 import com.alexvasilkov.events.Events;
 import com.miguel.gestorincidenciaapp.AddIssueMedia.AddIssueWithFoto;
-import com.miguel.gestorincidenciaapp.ListViewIssues.DetailIssue;
+import com.miguel.gestorincidenciaapp.ViewIssues.DetailIssue;
 import com.miguel.gestorincidenciaapp.Methods.IssuesMethods;
 import com.miguel.gestorincidenciaapp.R;
 import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;

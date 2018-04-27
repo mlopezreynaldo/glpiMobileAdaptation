@@ -1,4 +1,4 @@
-package com.miguel.gestorincidenciaapp.ListViewIssues;
+package com.miguel.gestorincidenciaapp.ViewIssues;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
