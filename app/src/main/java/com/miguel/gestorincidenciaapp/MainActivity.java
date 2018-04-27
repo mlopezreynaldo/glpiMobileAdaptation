@@ -1,6 +1,7 @@
 package com.miguel.gestorincidenciaapp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +15,17 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.miguel.gestorincidenciaapp.Dashboard.MenuListView;
+import com.miguel.gestorincidenciaapp.Login.Login;
+
 public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent i = new Intent(getApplicationContext(), Login.class);
+        startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -133,7 +133,6 @@ public class Login extends AppCompatActivity {
                     final EditText editPassword = rootView.findViewById(R.id.edTxT_passw);
                     ProgressBar progressBar = rootView.findViewById(R.id.pgBar);
                     progressBar.setVisibility(View.GONE);
-                    TextView onEstem = view.findViewById(R.id.txt_onEstem);
 
                     btnLogin.setOnClickListener(new View.OnClickListener() {
 
