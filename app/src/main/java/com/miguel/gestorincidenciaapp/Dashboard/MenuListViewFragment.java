@@ -53,7 +53,7 @@ public class MenuListViewFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_list_view, container, false);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_addIssue);
+        FloatingActionButton fab = view.findViewById(R.id.fab_addIssue);
         fab.setOnClickListener(new View.OnClickListener() {
 
             @Override

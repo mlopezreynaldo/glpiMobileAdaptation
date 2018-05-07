@@ -59,7 +59,7 @@ public class FinUsFragment extends Fragment {
 
         Marker marker = new Marker(map);
 
-        GeoPoint point = new GeoPoint(new Double(41.398297), new Double(2.203253));
+        GeoPoint point = new GeoPoint(Double.valueOf(41.398297), Double.valueOf(2.203253));
 
         marker.setPosition(point);
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
