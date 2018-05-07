@@ -57,13 +57,13 @@
                 android:value="com.miguel.gestorincidenciaapp.Login.Login" />
         </activity>
         <activity
-            android:name=".AboutUs.Map.Map"
+            android:name=".AboutUs.Map.FindUs"
             android:label="@string/title_activity_map"
-            android:parentActivityName=".Login.Login"
+            android:parentActivityName=".AboutUs.AboutUs"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.miguel.gestorincidenciaapp.Login.Login" />
+                android:value="com.miguel.gestorincidenciaapp.AboutUs.AboutUs" />
         </activity>
     </application>
 

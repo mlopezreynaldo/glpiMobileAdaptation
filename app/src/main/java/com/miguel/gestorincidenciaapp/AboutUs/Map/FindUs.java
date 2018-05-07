@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.miguel.gestorincidenciaapp.R;
 
-public class Map extends AppCompatActivity {
+public class FindUs extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,5 +29,4 @@ public class Map extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 }

@@ -26,7 +26,7 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 
-public class MapFragment extends Fragment {
+public class FinUsFragment extends Fragment {
 
     private MapView map;
     private IMapController mapController;
@@ -37,7 +37,7 @@ public class MapFragment extends Fragment {
     private RadiusMarkerClusterer institud;
 
 
-    public MapFragment() {}
+    public FinUsFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

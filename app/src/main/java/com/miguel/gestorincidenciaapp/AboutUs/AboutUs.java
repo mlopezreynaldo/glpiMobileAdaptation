@@ -19,7 +19,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
-import com.miguel.gestorincidenciaapp.AboutUs.Map.Map;
+import com.miguel.gestorincidenciaapp.AboutUs.Map.FindUs;
 import com.miguel.gestorincidenciaapp.R;
 
 import java.util.List;
@@ -157,8 +157,14 @@ public class AboutUs extends AppCompatPreferenceActivity {
 //            addPreferencesFromResource(R.xml.pref_find_us);
 //            setHasOptionsMenu(true);
 //            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-            startActivity(new Intent(getActivity(), Map.class));
+            Intent intent = new Intent(getActivity(), FindUs.class);
+            startActivity(intent);
+            getActivity().finish();
+
         }
+
+
+
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
