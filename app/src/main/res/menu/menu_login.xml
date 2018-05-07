@@ -2,13 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.miguel.gestorincidenciaapp.login">
-    <item
-        android:id="@+id/appInfo"
-        android:orderInCategory="100"
-        android:title="Sobre Nosaltres"
-        app:showAsAction="never" />
+
     <item
         android:id="@+id/finUs"
         android:orderInCategory="101"
-        android:title="On Estem?" />
+        android:title="Sobre Nosaltres" />
 </menu>

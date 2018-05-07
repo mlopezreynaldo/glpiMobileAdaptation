@@ -22,11 +22,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miguel.gestorincidenciaapp.APInterface.GlpiClient;
 import com.miguel.gestorincidenciaapp.Dashboard.MenuListView;
+import com.miguel.gestorincidenciaapp.AboutUs.AboutUs;
 import com.miguel.gestorincidenciaapp.Methods.LoginMethods;
 import com.miguel.gestorincidenciaapp.POJO.TokenInfo;
 import com.miguel.gestorincidenciaapp.R;
@@ -82,9 +82,13 @@ public class Login extends AppCompatActivity {
         int id = item.getItemId();
 
 
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id){
+            case R.id.finUs:
+                Intent i = new Intent(this, AboutUs.class);
+                startActivity(i);
+                return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }

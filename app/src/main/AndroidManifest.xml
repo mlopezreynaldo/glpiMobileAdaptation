@@ -3,10 +3,13 @@
     package="com.miguel.gestorincidenciaapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -45,6 +48,23 @@
             android:name=".AddIssueMedia.AddIssueWithFoto"
             android:label="@string/title_activity_location"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AboutUs.AboutUs"
+            android:label="@string/title_activity_login_map"
+            android:parentActivityName=".Login.Login">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.miguel.gestorincidenciaapp.Login.Login" />
+        </activity>
+        <activity
+            android:name=".AboutUs.Map.Map"
+            android:label="@string/title_activity_map"
+            android:parentActivityName=".Login.Login"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.miguel.gestorincidenciaapp.Login.Login" />
+        </activity>
     </application>
 
 </manifest>
