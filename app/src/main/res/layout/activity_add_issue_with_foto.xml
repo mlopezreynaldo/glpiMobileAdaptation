@@ -20,7 +20,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_location" />
+    <include
+        android:id="@+id/include2"
+        layout="@layout/content_location" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -29,5 +31,13 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <fragment
+        android:id="@+id/barcode_scanner"
+        android:name="info.androidhive.barcode.BarcodeReader"
+        android:layout_width="match_parent"
+        android:layout_height="435dp"
+        app:layout_anchor="@+id/include2"
+        app:layout_anchorGravity="left|center" />
 
 </android.support.design.widget.CoordinatorLayout>

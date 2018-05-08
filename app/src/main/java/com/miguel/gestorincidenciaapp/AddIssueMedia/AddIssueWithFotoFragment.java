@@ -7,27 +7,34 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
 import static android.app.Activity.RESULT_OK;
 import static android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 import static android.provider.MediaStore.Images.Media.query;
 
 
+import com.google.android.gms.vision.barcode.Barcode;
 import com.miguel.gestorincidenciaapp.R;
 
 import java.io.File;
+import java.util.List;
+
+import info.androidhive.barcode.BarcodeReader;
 
 
-public class AddIssueWithFotoFragment extends Fragment {
+public class AddIssueWithFotoFragment extends Fragment{
 
     private DownloadManager contentResolver;
     private static final int SELECT_PICTURE = 1;
 
-    public AddIssueWithFotoFragment() {
-    }
+    public AddIssueWithFotoFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +85,5 @@ public class AddIssueWithFotoFragment extends Fragment {
                 break;
         }
     }
-
 
 }
