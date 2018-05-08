@@ -65,5 +65,8 @@ dependencies {
     implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.1.0'
     implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.3.0'
     implementation 'com.alexvasilkov:events:1.0.0'
+    implementation 'info.androidhive:barcode-reader:1.1.5'
+    implementation 'com.google.android.gms:play-services-vision:11.0.2'
+
 
 }
