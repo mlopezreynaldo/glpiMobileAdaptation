@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.alexvasilkov.events.Events;
 import com.miguel.gestorincidenciaapp.AddIssueMedia.AddIssueWithFoto;
+import com.miguel.gestorincidenciaapp.DetailedIssue.DetailedIssue;
 import com.miguel.gestorincidenciaapp.ViewIssues.DetailIssue;
 import com.miguel.gestorincidenciaapp.Methods.IssuesMethods;
 import com.miguel.gestorincidenciaapp.R;
@@ -66,7 +67,9 @@ public class MenuListViewFragment extends Fragment {
                         "Formulari",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent formulari = new Intent(getContext(), DetailIssue.class);
+
+                                Intent formulari = new Intent(getContext(), DetailedIssue.class);
+                                formulari.putExtra("inputEnabled", true);
                                 startActivity(formulari);
                             }
                         });

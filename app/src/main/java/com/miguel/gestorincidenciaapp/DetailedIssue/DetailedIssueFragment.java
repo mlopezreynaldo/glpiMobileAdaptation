@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
@@ -14,13 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.alexvasilkov.events.Events;
 import com.hlab.fabrevealmenu.enums.Direction;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.model.FABMenuItem;
@@ -29,11 +25,10 @@ import com.miguel.gestorincidenciaapp.FabBaseFragment;
 import com.miguel.gestorincidenciaapp.R;
 import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuSelectedListener{
 
     private TicketJsonBuilder object;
@@ -46,6 +41,9 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
     private boolean inputsEnabled;
     private ArrayList<FABMenuItem> items;
     private Direction currentDirection = Direction.UP;
+    private boolean newSend;
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private String idIssue = "";
 
 
     public DetailedIssueFragment() {
@@ -65,9 +63,44 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
 
         Intent i = getActivity().getIntent();
         inputsEnabled = (boolean) i.getSerializableExtra("inputEnabled");
+        idIssue = (String) i.getSerializableExtra("id");
 
-        Log.d("INPUT","" + inputsEnabled);
         if(inputsEnabled){
+
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.status_labels, R.layout.support_simple_spinner_dropdown_item);
+            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+            statusSpiner.setAdapter(adapter);
+
+            ArrayAdapter<CharSequence> urgencyAD = ArrayAdapter.createFromResource(getActivity(), R.array.urgency_label, R.layout.support_simple_spinner_dropdown_item);
+            urgencyAD.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+            urgency.setAdapter(urgencyAD);
+
+            ArrayAdapter<CharSequence> priorityAD = ArrayAdapter.createFromResource(getActivity(), R.array.priority_label, R.layout.support_simple_spinner_dropdown_item);
+            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+            priority.setAdapter(priorityAD);
+
+            title.setText("");
+            title.setFocusable(true);
+
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            date.setText(sdf.format(timestamp));
+            date.setFocusable(false);
+            date.setBackgroundColor(Color.TRANSPARENT);
+
+            statusSpiner.setPrompt("Estado");
+//            statusSpiner.setSelection(0);
+            statusSpiner.setEnabled(true);
+
+            urgency.setSelection(1);
+            urgency.setEnabled(true);
+
+            priority.setSelection(0);
+            priority.setEnabled(true);
+
+            description.setText("");
+            description.setFocusable(true);
+
+            newSend = true;
 
 
         } else {
@@ -113,6 +146,8 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
                     description.setText(object.getContent());
                     description.setFocusable(false);
                     description.setBackgroundColor(Color.TRANSPARENT);
+
+                    newSend = false;
                 }
             }
         }
@@ -160,6 +195,7 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
             Toast.makeText(getActivity(), items.get(id).getTitle() + "Clicked", Toast.LENGTH_SHORT).show();
 
             switch (items.get(id).getTitle()){
+
                 case "Editar":
 
                     title.setFocusableInTouchMode(true);
@@ -178,7 +214,34 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
 
                 case  "Enviar":
 
-                    System.out.println("Enviando");
+                    TicketJsonBuilder newIssue = null;
+                    Long s = statusSpiner.getSelectedItemId();
+                    Long u = urgency.getSelectedItemId();
+                    Long p = priority.getSelectedItemId();
+
+                    int status = p.intValue();
+                    int urgency = u.intValue();
+                    int priority = p.intValue();
+
+                    newIssue = new TicketJsonBuilder(title.getText().toString(),
+                            date.getText().toString(),
+                            status,
+                            description.getText().toString(),
+                            urgency,
+                            priority,
+                            1
+                    );
+
+                    if(newSend){
+
+
+
+                    } else {
+
+
+
+                    }
+                    Log.d("NEWISSUE", newIssue.toString());
 
                     break;
 

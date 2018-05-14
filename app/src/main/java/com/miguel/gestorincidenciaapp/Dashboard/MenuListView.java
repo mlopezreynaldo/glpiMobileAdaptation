@@ -25,8 +25,6 @@ public class MenuListView extends AppCompatActivity {
     }
 
 
-
-
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

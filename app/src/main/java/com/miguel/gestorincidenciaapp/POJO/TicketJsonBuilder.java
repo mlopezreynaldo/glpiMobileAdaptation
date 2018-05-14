@@ -151,10 +151,17 @@ public class TicketJsonBuilder implements Serializable{
         this.impact = impact;
     }
 
-
     @Override
     public String toString() {
-        return name;
+        return "TicketJsonBuilder{" +
+                "name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", status=" + status +
+                ", content='" + content + '\'' +
+                ", urgency=" + urgency +
+                ", priority=" + priority +
+                ", type=" + type +
+                '}';
     }
 
     public String toti() {

@@ -2,7 +2,7 @@
 <resources>
 
 <string-array name="status_labels">
-    <item>Cerrado</item>
+    <!--<item>Cerrado</item>-->
     <item>Nueva</item>
     <item>En Curso (Asignada)</item>
     <item>En Curso (Planificada)</item>

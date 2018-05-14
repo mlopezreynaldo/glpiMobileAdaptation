@@ -18,6 +18,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/miguel/gestorincidenciaapp/APInterface/GlpiClient.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/miguel/gestorincidenciaapp/AddIssueMedia/AddIssueWithFoto.java">
           <value>
             <set />
@@ -38,7 +43,27 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/miguel/gestorincidenciaapp/Dashboard/MenuListView.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/miguel/gestorincidenciaapp/Dashboard/MenuListViewFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/miguel/gestorincidenciaapp/DetailedIssue/DetailedIssueFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/miguel/gestorincidenciaapp/Login/Login.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/miguel/gestorincidenciaapp/POJO/TicketJsonBuilder.java">
           <value>
             <set />
           </value>
@@ -69,6 +94,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_issue_with_foto.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/values/priority_spinner__labels.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/values/status_spinner_labels.xml">
           <value>
             <set />
           </value>
