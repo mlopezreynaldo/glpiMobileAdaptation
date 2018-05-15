@@ -2,6 +2,7 @@ package com.miguel.gestorincidenciaapp.DetailedIssue;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +22,7 @@ import com.hlab.fabrevealmenu.enums.Direction;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.model.FABMenuItem;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
+import com.miguel.gestorincidenciaapp.APInterface.GlpiClient;
 import com.miguel.gestorincidenciaapp.FabBaseFragment;
 import com.miguel.gestorincidenciaapp.R;
 import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
@@ -28,6 +30,15 @@ import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuSelectedListener{
 
@@ -44,7 +55,10 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
     private boolean newSend;
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String idIssue = "";
-
+    private GlpiClient glpi;
+    private String apptoken = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
+    private String sessionToken;
+    private Retrofit retrofit;
 
     public DetailedIssueFragment() {
     }
@@ -53,6 +67,18 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_detailed_issue, container, true);
+
+//        SharedPreferences sh = getActivity().getPreferences(Context.MODE_PRIVATE);
+//        sessionToken = sh.getString("session_token_shared", "");
+//        Log.i("TOKEN_NEW", sessionToken);
+
+        Retrofit.Builder builder = new Retrofit
+                .Builder()
+                .baseUrl("http://5.145.175.176/glpi/apirest.php/")
+                .addConverterFactory(GsonConverterFactory.create());
+        retrofit = builder.build();
+
+        glpi = retrofit.create(GlpiClient.class);
 
         title = inflate.findViewById(R.id.txtTitleIssue);
         date = inflate.findViewById(R.id.dateIssue);
@@ -63,6 +89,7 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
 
         Intent i = getActivity().getIntent();
         inputsEnabled = (boolean) i.getSerializableExtra("inputEnabled");
+        sessionToken = (String) i.getSerializableExtra("session");
         idIssue = (String) i.getSerializableExtra("id");
 
         if(inputsEnabled){
@@ -234,6 +261,30 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
 
                     if(newSend){
 
+                        Map<String, TicketJsonBuilder> map = new HashMap<>();
+                        map.put("input", newIssue);
+
+                        Call<TicketJsonBuilder> call = glpi.setNewIssue(apptoken,sessionToken, map);
+                        call.enqueue(new Callback<TicketJsonBuilder>() {
+                            @Override
+                            public void onResponse(Call<TicketJsonBuilder> call, Response<TicketJsonBuilder> response) {
+
+                                if(response.isSuccessful()){
+
+                                    Toast.makeText(getContext(),"DATA" + response.headers(), Toast.LENGTH_LONG).show();
+                                    Log.d("RESPUESTA",response.body().toString());
+
+                                } else {
+
+                                    Toast.makeText(getContext(),"DATA" + response.isSuccessful(), Toast.LENGTH_LONG).show();
+                                    Log.d("RESPUESTA",response.toString() + "   " + response.headers());
+
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<TicketJsonBuilder> call, Throwable t) {
+                            }
+                        });
 
 
                     } else {

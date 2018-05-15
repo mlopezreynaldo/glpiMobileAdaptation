@@ -1,7 +1,9 @@
 package com.miguel.gestorincidenciaapp.Login;
 
+import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -161,9 +163,9 @@ public class Login extends AppCompatActivity {
 
                                         if(response.isSuccessful()) {
 
-                                            SharedPreferences sh = getActivity().getPreferences(getContext().MODE_PRIVATE);
+                                            SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(getContext());
                                             SharedPreferences.Editor editor = sh.edit();
-                                            editor.putString("session_token_shared",response.body().getSessionToken());
+                                            editor.putString("session_token_shared",response.body().getSessionToken()).apply();
                                             editor.commit();
 
                                             Intent menuApp = new Intent(getContext(), MenuListView.class);

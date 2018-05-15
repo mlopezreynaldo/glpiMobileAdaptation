@@ -83,4 +83,7 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_map">Map</string>
+
+    <string name="pref_session_token"></string>
+    <string name="pref_session_token_default"></string>
 </resources>

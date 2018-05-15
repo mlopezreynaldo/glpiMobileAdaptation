@@ -70,6 +70,7 @@ public class MenuListViewFragment extends Fragment {
 
                                 Intent formulari = new Intent(getContext(), DetailedIssue.class);
                                 formulari.putExtra("inputEnabled", true);
+                                formulari.putExtra("session", session_token);
                                 startActivity(formulari);
                             }
                         });

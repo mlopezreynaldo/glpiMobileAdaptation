@@ -157,7 +157,6 @@ public class MainActivityFragment extends Fragment {
         map.put("input", t);
 
         Call<TicketJsonBuilder> call = glpi.setNewIssue(apptoken,sessionToken, map);
-
         call.enqueue(new Callback<TicketJsonBuilder>() {
             @Override
             public void onResponse(Call<TicketJsonBuilder> call, Response<TicketJsonBuilder> response) {
