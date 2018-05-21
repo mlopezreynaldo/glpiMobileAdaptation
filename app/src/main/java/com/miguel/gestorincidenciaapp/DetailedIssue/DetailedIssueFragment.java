@@ -2,11 +2,11 @@ package com.miguel.gestorincidenciaapp.DetailedIssue;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
@@ -14,26 +14,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.alexvasilkov.events.Events;
 import com.hlab.fabrevealmenu.enums.Direction;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.model.FABMenuItem;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
+import com.miguel.gestorincidenciaapp.APInterface.GlpiClient;
 import com.miguel.gestorincidenciaapp.FabBaseFragment;
 import com.miguel.gestorincidenciaapp.R;
 import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * A placeholder fragment containing a simple view.
- */
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuSelectedListener{
 
     private TicketJsonBuilder object;
@@ -46,7 +52,13 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
     private boolean inputsEnabled;
     private ArrayList<FABMenuItem> items;
     private Direction currentDirection = Direction.UP;
-
+    private boolean newSend;
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private String idIssue = "";
+    private GlpiClient glpi;
+    private String apptoken = "5o9yiRFgOUlOVYxZLnF1taKj67lnW4bSDUXGUlAj";
+    private String sessionToken;
+    private Retrofit retrofit;
 
     public DetailedIssueFragment() {
     }
@@ -55,6 +67,18 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_detailed_issue, container, true);
+
+//        SharedPreferences sh = getActivity().getPreferences(Context.MODE_PRIVATE);
+//        sessionToken = sh.getString("session_token_shared", "");
+//        Log.i("TOKEN_NEW", sessionToken);
+
+        Retrofit.Builder builder = new Retrofit
+                .Builder()
+                .baseUrl("http://5.145.175.176/glpi/apirest.php/")
+                .addConverterFactory(GsonConverterFactory.create());
+        retrofit = builder.build();
+
+        glpi = retrofit.create(GlpiClient.class);
 
         title = inflate.findViewById(R.id.txtTitleIssue);
         date = inflate.findViewById(R.id.dateIssue);
@@ -65,9 +89,45 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
 
         Intent i = getActivity().getIntent();
         inputsEnabled = (boolean) i.getSerializableExtra("inputEnabled");
+        sessionToken = (String) i.getSerializableExtra("session");
+        idIssue = (String) i.getSerializableExtra("id");
 
-        Log.d("INPUT","" + inputsEnabled);
         if(inputsEnabled){
+
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.status_labels, R.layout.support_simple_spinner_dropdown_item);
+            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+            statusSpiner.setAdapter(adapter);
+
+            ArrayAdapter<CharSequence> urgencyAD = ArrayAdapter.createFromResource(getActivity(), R.array.urgency_label, R.layout.support_simple_spinner_dropdown_item);
+            urgencyAD.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+            urgency.setAdapter(urgencyAD);
+
+            ArrayAdapter<CharSequence> priorityAD = ArrayAdapter.createFromResource(getActivity(), R.array.priority_label, R.layout.support_simple_spinner_dropdown_item);
+            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+            priority.setAdapter(priorityAD);
+
+            title.setText("");
+            title.setFocusable(true);
+
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            date.setText(sdf.format(timestamp));
+            date.setFocusable(false);
+            date.setBackgroundColor(Color.TRANSPARENT);
+
+            statusSpiner.setPrompt("Estado");
+//            statusSpiner.setSelection(0);
+            statusSpiner.setEnabled(true);
+
+            urgency.setSelection(1);
+            urgency.setEnabled(true);
+
+            priority.setSelection(0);
+            priority.setEnabled(true);
+
+            description.setText("");
+            description.setFocusable(true);
+
+            newSend = true;
 
 
         } else {
@@ -113,6 +173,8 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
                     description.setText(object.getContent());
                     description.setFocusable(false);
                     description.setBackgroundColor(Color.TRANSPARENT);
+
+                    newSend = false;
                 }
             }
         }
@@ -160,6 +222,7 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
             Toast.makeText(getActivity(), items.get(id).getTitle() + "Clicked", Toast.LENGTH_SHORT).show();
 
             switch (items.get(id).getTitle()){
+
                 case "Editar":
 
                     title.setFocusableInTouchMode(true);
@@ -178,7 +241,58 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
 
                 case  "Enviar":
 
-                    System.out.println("Enviando");
+                    TicketJsonBuilder newIssue = null;
+                    Long s = statusSpiner.getSelectedItemId();
+                    Long u = urgency.getSelectedItemId();
+                    Long p = priority.getSelectedItemId();
+
+                    int status = p.intValue();
+                    int urgency = u.intValue();
+                    int priority = p.intValue();
+
+                    newIssue = new TicketJsonBuilder(title.getText().toString(),
+                            date.getText().toString(),
+                            status,
+                            description.getText().toString(),
+                            urgency,
+                            priority,
+                            1
+                    );
+
+                    if(newSend){
+
+                        Map<String, TicketJsonBuilder> map = new HashMap<>();
+                        map.put("input", newIssue);
+
+                        Call<TicketJsonBuilder> call = glpi.setNewIssue(apptoken,sessionToken, map);
+                        call.enqueue(new Callback<TicketJsonBuilder>() {
+                            @Override
+                            public void onResponse(Call<TicketJsonBuilder> call, Response<TicketJsonBuilder> response) {
+
+                                if(response.isSuccessful()){
+
+                                    Toast.makeText(getContext(),"DATA" + response.headers(), Toast.LENGTH_LONG).show();
+                                    Log.d("RESPUESTA",response.body().toString());
+
+                                } else {
+
+                                    Toast.makeText(getContext(),"DATA" + response.isSuccessful(), Toast.LENGTH_LONG).show();
+                                    Log.d("RESPUESTA",response.toString() + "   " + response.headers());
+
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<TicketJsonBuilder> call, Throwable t) {
+                            }
+                        });
+
+
+                    } else {
+
+
+
+                    }
+                    Log.d("NEWISSUE", newIssue.toString());
 
                     break;
 

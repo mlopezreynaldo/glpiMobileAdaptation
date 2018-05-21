@@ -7,33 +7,43 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
+import com.google.android.gms.vision.barcode.Barcode;
 import com.miguel.gestorincidenciaapp.R;
 
-public class AddIssueWithFoto extends AppCompatActivity {
+import info.androidhive.barcode.BarcodeReader;
+
+public class AddIssueWithFoto extends AppCompatActivity implements BarcodeReader.BarcodeReaderListener{
 
 
     private String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
+    private BarcodeReader barcodeReader;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_issue_with_foto);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        barcodeReader = (BarcodeReader) getSupportFragmentManager().findFragmentById(R.id.barcode_scanner);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,8 +124,28 @@ public class AddIssueWithFoto extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onScanned(Barcode barcode) {
+        barcodeReader.playBeep();
+    }
 
+    @Override
+    public void onScannedMultiple(List<Barcode> barcodes) {
 
+    }
 
+    @Override
+    public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
 
+    }
+
+    @Override
+    public void onScanError(String errorMessage) {
+
+    }
+
+    @Override
+    public void onCameraPermissionDenied() {
+
+    }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddIssueMedia.AddIssueWithFoto">
+    tools:context=".AboutUs.Map.FindUs">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,9 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        android:id="@+id/include2"
-        layout="@layout/content_location" />
+    <include layout="@layout/content_map" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -30,23 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
-
-    <fragment
-        android:id="@+id/barcode_scanner"
-        android:name="info.androidhive.barcode.BarcodeReader"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:layout_anchor="@+id/include2"
-        app:layout_anchorGravity="center_horizontal|center_vertical" />
-    <info.androidhive.barcode.ScannerOverlay
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#44000000"
-        app:line_color="#7323DC"
-        app:line_speed="6"
-        app:line_width="4"
-        app:square_height="200"
-        app:square_width="200" />
+        app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

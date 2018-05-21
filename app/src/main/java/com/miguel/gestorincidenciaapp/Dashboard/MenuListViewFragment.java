@@ -15,7 +15,8 @@ import android.widget.ListView;
 
 import com.alexvasilkov.events.Events;
 import com.miguel.gestorincidenciaapp.AddIssueMedia.AddIssueWithFoto;
-import com.miguel.gestorincidenciaapp.ListViewIssues.DetailIssue;
+import com.miguel.gestorincidenciaapp.DetailedIssue.DetailedIssue;
+import com.miguel.gestorincidenciaapp.ViewIssues.DetailIssue;
 import com.miguel.gestorincidenciaapp.Methods.IssuesMethods;
 import com.miguel.gestorincidenciaapp.R;
 import com.miguel.gestorincidenciaapp.POJO.TicketJsonBuilder;
@@ -53,7 +54,7 @@ public class MenuListViewFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_list_view, container, false);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_addIssue);
+        FloatingActionButton fab = view.findViewById(R.id.fab_addIssue);
         fab.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -66,7 +67,10 @@ public class MenuListViewFragment extends Fragment {
                         "Formulari",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent formulari = new Intent(getContext(), DetailIssue.class);
+
+                                Intent formulari = new Intent(getContext(), DetailedIssue.class);
+                                formulari.putExtra("inputEnabled", true);
+                                formulari.putExtra("session", session_token);
                                 startActivity(formulari);
                             }
                         });

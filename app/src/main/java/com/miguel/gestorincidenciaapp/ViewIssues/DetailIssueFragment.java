@@ -1,4 +1,4 @@
-package com.miguel.gestorincidenciaapp.ListViewIssues;
+package com.miguel.gestorincidenciaapp.ViewIssues;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
