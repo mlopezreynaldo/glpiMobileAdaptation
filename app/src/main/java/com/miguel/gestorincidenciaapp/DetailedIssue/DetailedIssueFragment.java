@@ -68,10 +68,6 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_detailed_issue, container, true);
 
-//        SharedPreferences sh = getActivity().getPreferences(Context.MODE_PRIVATE);
-//        sessionToken = sh.getString("session_token_shared", "");
-//        Log.i("TOKEN_NEW", sessionToken);
-
         Retrofit.Builder builder = new Retrofit
                 .Builder()
                 .baseUrl("http://5.145.175.176/glpi/apirest.php/")
@@ -115,7 +111,6 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
             date.setBackgroundColor(Color.TRANSPARENT);
 
             statusSpiner.setPrompt("Estado");
-//            statusSpiner.setSelection(0);
             statusSpiner.setEnabled(true);
 
             urgency.setSelection(1);
@@ -132,9 +127,11 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
 
         } else {
             if (i != null) {
-                if (!inputsEnabled) {
 
+                if (!inputsEnabled) {
                     object = (TicketJsonBuilder) i.getSerializableExtra("issueSelected");
+
+                    idIssue = String.valueOf(object.getId());
 
                     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.status_labels, R.layout.support_simple_spinner_dropdown_item);
                     adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -205,7 +202,6 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
         }
     }
 
-
     private void initItems(boolean b) {
 
         items = new ArrayList<>();
@@ -241,25 +237,26 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
 
                 case  "Enviar":
 
-                    TicketJsonBuilder newIssue = null;
-                    Long s = statusSpiner.getSelectedItemId();
-                    Long u = urgency.getSelectedItemId();
-                    Long p = priority.getSelectedItemId();
-
-                    int status = p.intValue();
-                    int urgency = u.intValue();
-                    int priority = p.intValue();
-
-                    newIssue = new TicketJsonBuilder(title.getText().toString(),
-                            date.getText().toString(),
-                            status,
-                            description.getText().toString(),
-                            urgency,
-                            priority,
-                            1
-                    );
-
                     if(newSend){
+
+                        TicketJsonBuilder newIssue = null;
+                        Long s = statusSpiner.getSelectedItemId();
+                        Long u = urgency.getSelectedItemId();
+                        Long p = priority.getSelectedItemId();
+
+                        int status = p.intValue();
+                        int urgency = u.intValue();
+                        int priority = p.intValue();
+
+                        newIssue = new TicketJsonBuilder(
+                                title.getText().toString(),
+                                date.getText().toString(),
+                                status,
+                                description.getText().toString(),
+                                urgency,
+                                priority,
+                                1
+                        );
 
                         Map<String, TicketJsonBuilder> map = new HashMap<>();
                         map.put("input", newIssue);
@@ -289,11 +286,55 @@ public class DetailedIssueFragment extends FabBaseFragment implements OnFABMenuS
 
                     } else {
 
+                        TicketJsonBuilder updateIssue = null;
+                        int idIssueINT = Integer.valueOf(idIssue);
 
+                        Long s = statusSpiner.getSelectedItemId();
+                        Long u = urgency.getSelectedItemId();
+                        Long p = priority.getSelectedItemId();
 
+                        int status = p.intValue();
+                        int urgency = u.intValue();
+                        int priority = p.intValue();
+
+                        updateIssue = new TicketJsonBuilder(
+                                idIssueINT,
+                                title.getText().toString(),
+                                date.getText().toString(),
+                                status,
+                                description.getText().toString(),
+                                urgency,
+                                priority,
+                                1
+                        );
+
+                        Map<String, TicketJsonBuilder> map = new HashMap<>();
+                        map.put("input", updateIssue);
+
+                        Log.d("STRINGTOSEND", map.toString());
+                        Log.d("STRINGTOSEND", updateIssue.toString());
+
+                        Call<TicketJsonBuilder> call = glpi.updateIssue(apptoken,sessionToken, map);
+                        call.enqueue(new Callback<TicketJsonBuilder>() {
+                            @Override
+                            public void onResponse(Call<TicketJsonBuilder> call, Response<TicketJsonBuilder> response) {
+
+                                if(response.isSuccessful()){
+
+                                    Toast.makeText(getContext(),"DATA" + response.headers(), Toast.LENGTH_LONG).show();
+
+                                } else {
+
+                                    Toast.makeText(getContext(),"DATA" + response.isSuccessful(), Toast.LENGTH_LONG).show();
+                                    Log.d("SENTFAIL", response.headers().toString());
+
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<TicketJsonBuilder> call, Throwable t) {
+                            }
+                        });
                     }
-                    Log.d("NEWISSUE", newIssue.toString());
-
                     break;
 
                 case "Guardar":

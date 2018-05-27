@@ -67,6 +67,17 @@ public class TicketJsonBuilder implements Serializable{
         this.type = type;
     }
 
+    public TicketJsonBuilder(int id, String name, String date, int status, String content, int urgency, int priority, int type) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.status = status;
+        this.content = content;
+        this.urgency = urgency;
+        this.priority = priority;
+        this.type = type;
+    }
+
     public int getId() {
         return id;
     }

@@ -13,6 +13,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface GlpiClient {
@@ -34,6 +35,15 @@ public interface GlpiClient {
     @POST("Ticket")
     @Headers({"Content-Type: application/json","Cache-Control: max-age=640000"})
     Call<TicketJsonBuilder> setNewIssue(
+
+            @Query("app_token") String app_token,
+            @Query("session_token") String session_token,
+            @Body Map<String, TicketJsonBuilder> input
+    );
+
+    @PUT("Ticket")
+    @Headers({"Content-Type: application/json","Cache-Control: max-age=640000"})
+    Call<TicketJsonBuilder> updateIssue(
 
             @Query("app_token") String app_token,
             @Query("session_token") String session_token,
